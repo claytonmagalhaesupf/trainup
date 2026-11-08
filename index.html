@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -23,15 +24,51 @@
       --skeleton: #F1EFE8;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-    ul { list-style: none; }
-    .so-leitor { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-    button:focus-visible, input:focus-visible, summary:focus-visible, a:focus-visible {
-      outline: 2px solid var(--primary); outline-offset: 2px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .header button:focus-visible { outline-color: #fff; }
-    #card-treino:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .so-leitor {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    summary:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .header button:focus-visible {
+      outline-color: #fff;
+    }
+
+    #card-treino:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
 
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -60,7 +97,11 @@
 
     /* No celular de verdade, ocupa a tela toda */
     @media (max-width: 500px) {
-      body { padding: 0; background: var(--bg); }
+      body {
+        padding: 0;
+        background: var(--bg);
+      }
+
       .phone {
         width: 100%;
         height: 100vh;
@@ -71,14 +112,26 @@
       }
     }
 
-    .tela { display: none; flex: 1; min-height: 0; overflow-y: auto; }
-    .tela.ativa { display: block; }
+    .tela {
+      display: none;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    .tela.ativa {
+      display: block;
+    }
 
     /* ============ ÍCONES ============ */
     .ic {
-      width: 20px; height: 20px;
-      fill: none; stroke: currentColor;
-      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
       flex-shrink: 0;
     }
 
@@ -89,30 +142,90 @@
       padding: 20px 20px 30px;
       border-radius: 0 0 24px 24px;
     }
+
     .header-topo {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 18px;
     }
-    .header-data { font-size: 12px; opacity: 0.9; }
-    .btn-sino { color: #fff; width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-    .btn-sino .ic { width: 18px; height: 18px; }
-    .header-usuario { display: flex; align-items: center; gap: 12px; }
-    .avatar {
-      width: 46px; height: 46px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 600; font-size: 15px;
+
+    .header-data {
+      font-size: 12px;
+      opacity: 0.9;
     }
-    .saudacao { font-size: 13px; opacity: 0.9; }
-    .aviso-avaliacao { margin-top: 12px; font-size: 12px; line-height: 1.5; color: #fff; }
-    .nome-usuario { font-size: 20px; font-weight: 600; margin-top: 2px; }
-    .titulo-tela { font-size: 22px; font-weight: 600; }
-    .subtitulo-tela { font-size: 13px; opacity: 0.9; margin-top: 4px; overflow-wrap: anywhere; }
+
+    .btn-sino {
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-sino .ic {
+      width: 18px;
+      height: 18px;
+    }
+
+    .header-usuario {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .saudacao {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .aviso-avaliacao {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #fff;
+    }
+
+    .nome-usuario {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .titulo-tela {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .subtitulo-tela {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-top: 4px;
+      overflow-wrap: anywhere;
+    }
 
     /* ============ CONTEÚDO ============ */
-    .conteudo { padding: 0 16px 28px; }
+    .conteudo {
+      padding: 0 16px 28px;
+    }
+
     .secao-titulo {
-      font-size: 14px; font-weight: 600;
+      font-size: 14px;
+      font-weight: 600;
       margin: 20px 0 10px 4px;
     }
 
@@ -125,179 +238,630 @@
     }
 
     /* ---- Resumo do dia (grade 2x2) ---- */
-    .grade-resumo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
-    .resumo-topo { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 11px; font-weight: 600; }
-    .resumo-topo .ic { width: 16px; height: 16px; }
+    .grade-resumo {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .resumo-topo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .resumo-topo .ic {
+      width: 16px;
+      height: 16px;
+    }
+
     /* O texto usa contraste maior; os ícones conservam os acentos originais. */
-    .resumo-topo span { color: var(--text2); }
-    .resumo-valor { font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
-    .resumo-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+    .resumo-topo span {
+      color: var(--text2);
+    }
+
+    .resumo-valor {
+      font-size: 15px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .resumo-sub {
+      font-size: 11px;
+      color: var(--text2);
+      margin-top: 2px;
+    }
 
     /* ---- Ações rápidas ---- */
-    .acoes { display: flex; gap: 10px; }
+    .acoes {
+      display: flex;
+      gap: 10px;
+    }
+
     .acao {
       flex: 1;
       background: var(--surface);
       border: 0.5px solid var(--border);
       border-radius: 14px;
       padding: 14px 6px;
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
-    .acao .ic { width: 18px; height: 18px; }
-    .acao.principal { background: var(--primary); border-color: var(--primary); color: #fff; }
-    .acao:active { transform: scale(0.97); }
+
+    .acao .ic {
+      width: 18px;
+      height: 18px;
+    }
+
+    .acao.principal {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .acao:active {
+      transform: scale(0.97);
+    }
 
     /* ---- Cartão "Treino de hoje" ---- */
-    .card-topo { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-    .card-titulo { font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
-    .card-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
-    .selo {
-      font-size: 11px; font-weight: 600;
-      padding: 4px 10px; border-radius: 20px;
-      background: var(--skeleton); color: var(--text2);
+    .card-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
     }
-    .selo.ok { background: #E1F5EE; color: var(--primary); }
-    #card-treino .card-topo { flex-wrap: wrap; gap: 8px; }
-    .registro-info { font-size: 12px; color: var(--text2); line-height: 1.5; margin-bottom: 10px; }
-    .registro-info button, .btn-cancelar { color: var(--primary); font-size: 13px; text-decoration: underline; padding: 12px 4px; min-height: 44px; }
-    .registro-info button { display: block; }
-    .btn-cancelar { margin-bottom: 4px; }
 
-    .barra { height: 8px; background: var(--skeleton); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
-    .barra-preenchida { height: 100%; width: 0; background: var(--primary); border-radius: 8px; transition: width 0.3s; }
+    .card-titulo {
+      font-size: 14px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    .selo {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: var(--skeleton);
+      color: var(--text2);
+    }
+
+    .selo.ok {
+      background: #E1F5EE;
+      color: var(--primary);
+    }
+
+    #card-treino .card-topo {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .registro-info {
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .registro-info button,
+    .btn-cancelar {
+      color: var(--primary);
+      font-size: 13px;
+      text-decoration: underline;
+      padding: 12px 4px;
+      min-height: 44px;
+    }
+
+    .registro-info button {
+      display: block;
+    }
+
+    .btn-cancelar {
+      margin-bottom: 4px;
+    }
+
+    .barra {
+      height: 8px;
+      background: var(--skeleton);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .barra-preenchida {
+      height: 100%;
+      width: 0;
+      background: var(--primary);
+      border-radius: 8px;
+      transition: width 0.3s;
+    }
 
     /* Linha de exercício na home (toque para marcar) */
     .item {
       width: 100%;
-      display: flex; align-items: center; gap: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
       padding: 10px 4px;
       text-align: left;
       border-top: 0.5px solid var(--border);
     }
-    .lista li:first-child .item { border-top: none; }
+
+    .lista li:first-child .item {
+      border-top: none;
+    }
+
     .marca {
-      width: 24px; height: 24px; border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
       border: 2px solid var(--muted);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: transparent;
       flex-shrink: 0;
     }
-    .marca .ic { width: 14px; height: 14px; stroke-width: 3; }
-    .item.feito .marca { background: var(--primary); border-color: var(--primary); color: #fff; }
-    .item-info { flex: 1; min-width: 0; }
-    .item-nome { font-size: 14px; font-weight: 500; overflow-wrap: anywhere; }
-    .item-det { font-size: 12px; color: var(--text2); margin-top: 2px; }
-    .item.feito .item-nome { color: var(--text2); text-decoration: line-through; }
 
-    .dica { font-size: 12px; color: var(--text2); margin-top: 10px; text-align: center; }
-    .nota-exemplo { font-size: 12px; line-height: 1.4; color: var(--text2); margin: 10px 0; }
-    .link-ajuda { color: var(--primary); text-decoration: underline; font-size: 12px; line-height: 1.4; padding: 10px 0; min-height: 44px; text-align: left; }
-    .linha-home { display: flex; align-items: center; gap: 4px; }
-    .linha-home .item { flex: 1; min-width: 0; }
-    .ajuda-ex { color: var(--primary); font-size: 12px; text-decoration: underline; min-width: 44px; min-height: 44px; flex-shrink: 0; }
-    .link-ajuda:focus-visible, .ajuda-ex:focus-visible, .ajuda-fechar:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-    .ajuda-dialogo {
-      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: min(358px, calc(100% - 32px)); max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px);
-      padding: 0; border: 1px solid var(--border); border-radius: 16px;
-      background: var(--surface); color: var(--text); overflow-y: auto;
+    .marca .ic {
+      width: 14px;
+      height: 14px;
+      stroke-width: 3;
     }
-    .ajuda-dialogo::backdrop { background: rgba(0, 0, 0, .4); }
-    .ajuda-topo { position: sticky; top: 0; background: var(--surface); padding: 12px 16px; border-bottom: 1px solid var(--border); }
-    .ajuda-topo h2 { font-size: 16px; }
-    .ajuda-fechar { color: var(--primary); font-size: 14px; text-decoration: underline; min-height: 44px; }
-    .ajuda-corpo { padding: 16px; font-size: 13px; line-height: 1.5; }
-    .ajuda-corpo p { margin-bottom: 12px; }
-    .ajuda-corpo dt { font-weight: 600; margin-top: 12px; }
-    #ajuda-volume { scroll-margin-top: 110px; }
-    .ajuda-corpo dd { margin: 4px 0 12px; }
-    .ajuda-corpo summary { cursor: pointer; color: var(--primary); padding: 10px 0; min-height: 44px; }
-    .ajuda-corpo a { color: var(--primary); overflow-wrap: anywhere; }
-    #ajuda-contexto { overflow-wrap: anywhere; background: var(--bg); border-radius: 8px; padding: 10px; }
-    .vazio { font-size: 13px; color: var(--text2); text-align: center; padding: 14px 0; }
+
+    .item.feito .marca {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-nome {
+      font-size: 14px;
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+
+    .item-det {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    .item.feito .item-nome {
+      color: var(--text2);
+      text-decoration: line-through;
+    }
+
+    .dica {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .nota-exemplo {
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text2);
+      margin: 10px 0;
+    }
+
+    .link-ajuda {
+      color: var(--primary);
+      text-decoration: underline;
+      font-size: 12px;
+      line-height: 1.4;
+      padding: 10px 0;
+      min-height: 44px;
+      text-align: left;
+    }
+
+    .linha-home {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .linha-home .item {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ajuda-ex {
+      color: var(--primary);
+      font-size: 12px;
+      text-decoration: underline;
+      min-width: 44px;
+      min-height: 44px;
+      flex-shrink: 0;
+    }
+
+    .link-ajuda:focus-visible,
+    .ajuda-ex:focus-visible,
+    .ajuda-fechar:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .ajuda-dialogo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(358px, calc(100% - 32px));
+      max-height: calc(100vh - 48px);
+      max-height: calc(100dvh - 48px);
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      color: var(--text);
+      overflow-y: auto;
+    }
+
+    .ajuda-dialogo::backdrop {
+      background: rgba(0, 0, 0, .4);
+    }
+
+    .ajuda-topo {
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ajuda-topo h2 {
+      font-size: 16px;
+    }
+
+    .ajuda-fechar {
+      color: var(--primary);
+      font-size: 14px;
+      text-decoration: underline;
+      min-height: 44px;
+    }
+
+    .ajuda-corpo {
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .ajuda-corpo p {
+      margin-bottom: 12px;
+    }
+
+    .ajuda-corpo dt {
+      font-weight: 600;
+      margin-top: 12px;
+    }
+
+    #ajuda-volume {
+      scroll-margin-top: 110px;
+    }
+
+    .ajuda-corpo dd {
+      margin: 4px 0 12px;
+    }
+
+    .ajuda-corpo summary {
+      cursor: pointer;
+      color: var(--primary);
+      padding: 10px 0;
+      min-height: 44px;
+    }
+
+    .ajuda-corpo a {
+      color: var(--primary);
+      overflow-wrap: anywhere;
+    }
+
+    #ajuda-contexto {
+      overflow-wrap: anywhere;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .vazio {
+      font-size: 13px;
+      color: var(--text2);
+      text-align: center;
+      padding: 14px 0;
+    }
 
     /* ---- Progresso semanal ---- */
-    .semana { display: flex; gap: 4px; margin: 14px 0; }
-    .dia { flex: 1; text-align: center; }
-    .dia-barra { height: 34px; border-radius: 6px; background: var(--skeleton); color: #0B5945; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-    .dia.feito .dia-barra { background: var(--primary); color: #fff; }
-    .dia.hoje:not(.feito) .dia-barra { background: var(--primary-light); border: 1px dashed var(--primary); }
-    .dia-letra { font-size: 10px; color: var(--text2); margin-top: 6px; }
-    .dia.hoje .dia-letra::after { content: 'Hoje'; display: block; font-weight: 600; color: var(--primary); }
-    .estatisticas {
-      display: flex; justify-content: space-between;
-      padding-top: 12px; border-top: 0.5px solid var(--border);
+    .semana {
+      display: flex;
+      gap: 4px;
+      margin: 14px 0;
     }
-    .est-rotulo { font-size: 11px; color: var(--text2); }
-    .est-valor { font-size: 15px; font-weight: 600; margin-top: 2px; }
+
+    .dia {
+      flex: 1;
+      text-align: center;
+    }
+
+    .dia-barra {
+      height: 34px;
+      border-radius: 6px;
+      background: var(--skeleton);
+      color: #0B5945;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .dia.feito .dia-barra {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .dia.hoje:not(.feito) .dia-barra {
+      background: var(--primary-light);
+      border: 1px dashed var(--primary);
+    }
+
+    .dia-letra {
+      font-size: 10px;
+      color: var(--text2);
+      margin-top: 6px;
+    }
+
+    .dia.hoje .dia-letra::after {
+      content: 'Hoje';
+      display: block;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .estatisticas {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .est-rotulo {
+      font-size: 11px;
+      color: var(--text2);
+    }
+
+    .est-valor {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
 
     /* ============ TELA DE TREINOS ============ */
     .linha-ex {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
       padding: 12px 0;
       border-top: 0.5px solid var(--border);
     }
-    .lista li:first-child .linha-ex { border-top: none; }
-    /* Nome e informações ficam acima para os alvos não disputarem espaço. */
-    .linha-ex .item-info { flex-basis: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
-    .linha-ex .item-nome, .linha-ex .item-det { grid-column: 1; }
-    .linha-ex .link-ajuda { grid-column: 2; grid-row: 1 / 3; align-self: center; }
-    .stepper { display: flex; align-items: center; gap: 6px; }
-    .stepper, .btn-lixo { flex-shrink: 0; }
-    .stepper button {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: var(--skeleton); font-size: 16px; font-weight: 600; color: var(--primary);
-      display: flex; align-items: center; justify-content: center;
+
+    .lista li:first-child .linha-ex {
+      border-top: none;
     }
-    .stepper span { min-width: 48px; text-align: center; font-size: 13px; font-weight: 600; }
-    .btn-lixo { color: var(--muted); width: 44px; height: 44px; margin-left: auto; display: flex; align-items: center; justify-content: center; }
-    .btn-lixo:hover { color: var(--pink); }
+
+    /* Nome e informações ficam acima para os alvos não disputarem espaço. */
+    .linha-ex .item-info {
+      flex-basis: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 12px;
+    }
+
+    .linha-ex .item-nome,
+    .linha-ex .item-det {
+      grid-column: 1;
+    }
+
+    .linha-ex .link-ajuda {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      align-self: center;
+    }
+
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stepper,
+    .btn-lixo {
+      flex-shrink: 0;
+    }
+
+    .stepper button {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--skeleton);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stepper span {
+      min-width: 48px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .btn-lixo {
+      color: var(--muted);
+      width: 44px;
+      height: 44px;
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-lixo:hover {
+      color: var(--pink);
+    }
 
     /* Formulário */
-    .form { display: flex; flex-direction: column; gap: 10px; }
-    .form label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px; }
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form label {
+      font-size: 12px;
+      color: var(--text2);
+      display: block;
+      margin-bottom: 4px;
+    }
+
     .form input {
       width: 100%;
-      font-size: 16px; /* 16px evita zoom automático no iPhone */
+      font-size: 16px;
+      /* 16px evita zoom automático no iPhone */
       padding: 10px 12px;
       border: 1px solid var(--border);
       border-radius: 10px;
       background: var(--bg);
       color: var(--text);
     }
-    .form input:focus { outline: 2px solid var(--primary); border-color: var(--primary); }
-    .form input::placeholder { color: var(--text2); opacity: 1; }
-    .form input[aria-invalid="true"] { border-color: #9C3434; }
-    .campo-erro, .form-ajuda { font-size: 12px; line-height: 1.4; margin: 4px 0 0; }
-    .campo-erro { color: #9C3434; }
-    .form-ajuda { color: var(--text2); }
-    .form-linha { display: flex; gap: 8px; }
-    .form-linha > div { flex: 1; min-width: 0; }
-    .btn-primario {
-      background: var(--primary); color: #fff;
-      min-height: 44px;
-      font-size: 14px; font-weight: 600;
-      padding: 12px; border-radius: 12px;
+
+    .form input:focus {
+      outline: 2px solid var(--primary);
+      border-color: var(--primary);
     }
-    .btn-primario:active { transform: scale(0.98); }
+
+    .form input::placeholder {
+      color: var(--text2);
+      opacity: 1;
+    }
+
+    .form input[aria-invalid="true"] {
+      border-color: #9C3434;
+    }
+
+    .campo-erro,
+    .form-ajuda {
+      font-size: 12px;
+      line-height: 1.4;
+      margin: 4px 0 0;
+    }
+
+    .campo-erro {
+      color: #9C3434;
+    }
+
+    .form-ajuda {
+      color: var(--text2);
+    }
+
+    .form-linha {
+      display: flex;
+      gap: 8px;
+    }
+
+    .form-linha>div {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .btn-primario {
+      background: var(--primary);
+      color: #fff;
+      min-height: 44px;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .btn-primario:active {
+      transform: scale(0.98);
+    }
 
     /* Histórico */
-    .hist-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 0.5px solid var(--border); }
-    .lista li:first-child .hist-item { border-top: none; }
-    .hist-data {
-      width: 48px; padding: 6px 0; border-radius: 10px;
-      flex-shrink: 0;
-      background: #E1F5EE; color: var(--primary);
-      text-align: center; font-size: 12px; font-weight: 600; text-transform: capitalize;
+    .hist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 0.5px solid var(--border);
     }
-    .hist-volume { font-size: 12px; font-weight: 600; color: var(--primary); overflow-wrap: anywhere; }
-    .hist-ano { display: block; font-size: 11px; }
-    .hist-limite { font-size: 12px; line-height: 1.4; color: var(--text2); margin-bottom: 8px; }
+
+    .lista li:first-child .hist-item {
+      border-top: none;
+    }
+
+    .hist-data {
+      width: 48px;
+      padding: 6px 0;
+      border-radius: 10px;
+      flex-shrink: 0;
+      background: #E1F5EE;
+      color: var(--primary);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .hist-volume {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      overflow-wrap: anywhere;
+    }
+
+    .hist-ano {
+      display: block;
+      font-size: 11px;
+    }
+
+    .hist-limite {
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text2);
+      margin-bottom: 8px;
+    }
+
     .link-reset {
-      display: block; margin: 20px auto 0;
-      font-size: 12px; color: var(--text2); text-decoration: underline; min-height: 44px;
+      display: block;
+      margin: 20px auto 0;
+      font-size: 12px;
+      color: var(--text2);
+      text-decoration: underline;
+      min-height: 44px;
     }
 
     /* ============ BARRA DE NAVEGAÇÃO ============ */
@@ -308,40 +872,116 @@
       border-top: 0.5px solid var(--border);
       padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
     }
+
     .tab {
       flex: 1;
-      display: flex; flex-direction: column; align-items: center; gap: 2px;
-      font-size: 10px; color: var(--text2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 10px;
+      color: var(--text2);
       padding: 4px 0;
     }
-    .tab .ic { width: 20px; height: 20px; color: var(--muted); }
-    .tab.ativa .ic { color: var(--primary); }
-    .tab.ativa { color: var(--primary); font-weight: 600; }
-    .tab-aviso { font-size: 10px; color: var(--text2); }
-    .tab:focus-visible, #titulo-historico:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    .tab .ic {
+      width: 20px;
+      height: 20px;
+      color: var(--muted);
+    }
+
+    .tab.ativa .ic {
+      color: var(--primary);
+    }
+
+    .tab.ativa {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .tab-aviso {
+      font-size: 10px;
+      color: var(--text2);
+    }
+
+    .tab:focus-visible,
+    #titulo-historico:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
 
     /* ============ AVISO (toast) ============ */
     .toast {
-      position: absolute; left: 50%; bottom: 84px;
+      position: absolute;
+      left: 50%;
+      bottom: 84px;
       transform: translate(-50%, 20px);
-      background: #2C2C2A; color: #fff;
-      font-size: 13px; padding: 10px 16px; border-radius: 20px;
-      opacity: 0; pointer-events: none;
+      background: #2C2C2A;
+      color: #fff;
+      font-size: 13px;
+      padding: 10px 16px;
+      border-radius: 20px;
+      opacity: 0;
+      pointer-events: none;
       transition: opacity 0.25s, transform 0.25s;
-      max-width: 85%; text-align: center;
+      max-width: 85%;
+      text-align: center;
     }
-    .toast.mostrar { opacity: 1; transform: translate(-50%, 0); }
+
+    .toast.mostrar {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
 
     /* O problema de armazenamento fica visível até ser resolvido. */
-    .aviso-dados { flex-shrink: 0; max-height: 35%; overflow-y: auto; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
-    .aviso-dados button { color: var(--primary); text-decoration: underline; padding: 10px 0; min-height: 44px; font-size: 13px; }
-    .aviso-dados button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-    button:disabled { cursor: default; opacity: .55; }
-    @media (prefers-reduced-motion: reduce) {
-      .barra-preenchida, .toast { transition: none; }
-      .acao:active, .btn-primario:active { transform: none; }
-      .toast { transform: translate(-50%, 0); }
+    .aviso-dados {
+      flex-shrink: 0;
+      max-height: 35%;
+      overflow-y: auto;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text);
     }
+
+    .aviso-dados button {
+      color: var(--primary);
+      text-decoration: underline;
+      padding: 10px 0;
+      min-height: 44px;
+      font-size: 13px;
+    }
+
+    .aviso-dados button:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: .55;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .barra-preenchida,
+      .toast {
+        transition: none;
+      }
+
+      .acao:active,
+      .btn-primario:active {
+        transform: none;
+      }
+
+      .toast {
+        transform: translate(-50%, 0);
+      }
+    }
+  </style>
+  <style>
+
   </style>
 </head>
 
@@ -349,17 +989,58 @@
 
   <!-- Ícones (desenhados em SVG, não precisa de internet) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol>
-    <symbol id="i-barbell" viewBox="0 0 24 24"><path d="M2 12h1" /><path d="M6 8h-2a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1h2" /><path d="M6 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1" /><path d="M9 12h6" /><path d="M15 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1" /><path d="M18 8h2a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-2" /><path d="M22 12h-1" /></symbol>
-    <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M4 8h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1" /></symbol>
-    <symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M4 19l16 0" /><path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol>
-    <symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></symbol>
-    <symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5l0 14" /><path d="M5 12l14 0" /></symbol>
-    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol>
-    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></symbol>
-    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.294 -2.333 5.588c0 3.704 3.134 6.706 7 6.706c3.866 0 7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24">
+      <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+      <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+      <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+    </symbol>
+    <symbol id="i-barbell" viewBox="0 0 24 24">
+      <path d="M2 12h1" />
+      <path d="M6 8h-2a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1h2" />
+      <path d="M6 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1" />
+      <path d="M9 12h6" />
+      <path d="M15 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1" />
+      <path d="M18 8h2a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-2" />
+      <path d="M22 12h-1" />
+    </symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24">
+      <path
+        d="M4 8h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1" />
+    </symbol>
+    <symbol id="i-chart-line" viewBox="0 0 24 24">
+      <path d="M4 19l16 0" />
+      <path d="M4 15l4 -6l4 2l4 -5l4 4" />
+    </symbol>
+    <symbol id="i-trending-up" viewBox="0 0 24 24">
+      <path d="M3 17l6 -6l4 4l8 -8" />
+      <path d="M14 7l7 0l0 7" />
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24">
+      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+    </symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24">
+      <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+      <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24">
+      <path d="M12 5l0 14" />
+      <path d="M5 12l14 0" />
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <path d="M5 12l5 5l10 -10" />
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24">
+      <path d="M4 7l16 0" />
+      <path d="M10 11l0 6" />
+      <path d="M14 11l0 6" />
+      <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+      <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+    </symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24">
+      <path
+        d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.294 -2.333 5.588c0 3.704 3.134 6.706 7 6.706c3.866 0 7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" />
+    </symbol>
   </svg>
 
   <div class="phone">
@@ -381,7 +1062,9 @@
         <div class="header-topo">
           <span class="header-data" id="data-hoje"></span>
           <button class="btn-sino" data-acao="notificacoes" aria-label="Notificações">
-            <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
+            <svg class="ic" aria-hidden="true" focusable="false">
+              <use href="#i-bell" />
+            </svg>
           </button>
         </div>
         <div class="header-usuario">
@@ -401,15 +1084,21 @@
         <h2 class="secao-titulo">Ações rápidas</h2>
         <div class="acoes">
           <button class="acao principal" data-acao="registrar">
-            <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>
+            <svg class="ic" aria-hidden="true" focusable="false">
+              <use href="#i-plus" />
+            </svg>
             <span id="acao-registro">Registrar treino</span>
           </button>
           <button class="acao" data-acao="novo-exercicio">
-            <svg class="ic" aria-hidden="true" focusable="false" style="color: var(--orange)"><use href="#i-barbell"/></svg>
+            <svg class="ic" aria-hidden="true" focusable="false" style="color: var(--orange)">
+              <use href="#i-barbell" />
+            </svg>
             Novo exercício
           </button>
           <button class="acao" data-acao="historico">
-            <svg class="ic" aria-hidden="true" focusable="false" style="color: var(--blue)"><use href="#i-chart-line"/></svg>
+            <svg class="ic" aria-hidden="true" focusable="false" style="color: var(--blue)">
+              <use href="#i-chart-line" />
+            </svg>
             Histórico
           </button>
         </div>
@@ -423,7 +1112,11 @@
             </div>
             <span class="selo" id="home-selo"></span>
           </div>
-          <div class="barra" id="progresso-treino" role="progressbar" aria-label="Exercícios marcados" aria-describedby="home-progresso-texto" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Nenhum exercício marcado"><div class="barra-preenchida" id="home-barra"></div></div>
+          <div class="barra" id="progresso-treino" role="progressbar" aria-label="Exercícios marcados"
+            aria-describedby="home-progresso-texto" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+            aria-valuetext="Nenhum exercício marcado">
+            <div class="barra-preenchida" id="home-barra"></div>
+          </div>
           <button class="link-ajuda" data-acao="ajuda">Entender meu treino</button>
           <p class="nota-exemplo">O treino inicial é um exemplo de demonstração, sem prescrição individual.</p>
           <p class="registro-info" id="home-registro" hidden></p>
@@ -441,9 +1134,18 @@
           <div class="semana" id="semana" role="list" aria-label="Registros de segunda a domingo"></div>
           <p class="dica">✓ Treino registrado · — Sem registro</p>
           <div class="estatisticas">
-            <div><div class="est-rotulo">Treinos feitos</div><div class="est-valor" id="est-feitos"></div></div>
-            <div><div class="est-rotulo">Meta semanal</div><div class="est-valor" id="est-meta"></div></div>
-            <div><div class="est-rotulo">Faltam</div><div class="est-valor" id="est-faltam" style="color: var(--primary)"></div></div>
+            <div>
+              <div class="est-rotulo">Treinos feitos</div>
+              <div class="est-valor" id="est-feitos"></div>
+            </div>
+            <div>
+              <div class="est-rotulo">Meta semanal</div>
+              <div class="est-valor" id="est-meta"></div>
+            </div>
+            <div>
+              <div class="est-rotulo">Faltam</div>
+              <div class="est-valor" id="est-faltam" style="color: var(--primary)"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -473,7 +1175,8 @@
         <form class="card form" id="form-exercicio" autocomplete="off" novalidate>
           <div>
             <label for="f-nome">Nome do exercício</label>
-            <input id="f-nome" type="text" placeholder="Ex.: Supino reto" required aria-describedby="ajuda-nome erro-nome">
+            <input id="f-nome" type="text" placeholder="Ex.: Supino reto" required
+              aria-describedby="ajuda-nome erro-nome">
             <p class="form-ajuda" id="ajuda-nome">Até 40 caracteres.</p>
             <p class="campo-erro" id="erro-nome" hidden></p>
           </div>
@@ -490,16 +1193,19 @@
             </div>
             <div>
               <label for="f-carga">Carga (kg)</label>
-              <input id="f-carga" type="text" inputmode="decimal" required value="0" aria-describedby="ajuda-carga erro-carga">
+              <input id="f-carga" type="text" inputmode="decimal" required value="0"
+                aria-describedby="ajuda-carga erro-carga">
               <p class="campo-erro" id="erro-carga" hidden></p>
             </div>
           </div>
-          <p class="form-ajuda" id="ajuda-carga">Carga: use vírgula ou ponto e até uma casa decimal (ex.: 2,5). Zero indica peso corporal.</p>
+          <p class="form-ajuda" id="ajuda-carga">Carga: use vírgula ou ponto e até uma casa decimal (ex.: 2,5). Zero
+            indica peso corporal.</p>
           <p class="campo-erro" id="erro-formulario" role="alert" hidden></p>
           <button class="btn-primario" type="submit">Adicionar ao treino</button>
         </form>
 
-        <h2 class="secao-titulo" id="titulo-historico" tabindex="-1" aria-describedby="historico-limite">Histórico de treinos</h2>
+        <h2 class="secao-titulo" id="titulo-historico" tabindex="-1" aria-describedby="historico-limite">Histórico de
+          treinos</h2>
         <div class="card">
           <p class="hist-limite" id="historico-limite">Até 6 registros, do mais recente ao mais antigo.</p>
           <ul class="lista" id="historico-lista"></ul>
@@ -512,21 +1218,31 @@
     <!-- ================= BARRA DE NAVEGAÇÃO ================= -->
     <nav class="tabbar" aria-label="Navegação principal">
       <button class="tab ativa" data-acao="aba" data-aba="inicio" aria-controls="tela-inicio" aria-current="page">
-        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-home"/></svg>Início
+        <svg class="ic" aria-hidden="true" focusable="false">
+          <use href="#i-home" />
+        </svg>Início
       </button>
       <button class="tab" data-acao="aba" data-aba="treinos" aria-controls="tela-treinos">
-        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-barbell"/></svg>Treinos
+        <svg class="ic" aria-hidden="true" focusable="false">
+          <use href="#i-barbell" />
+        </svg>Treinos
       </button>
       <button class="tab" data-acao="embreve" aria-disabled="true" aria-label="Dieta, indisponível nesta versão">
-        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-bowl"/></svg>Dieta
+        <svg class="ic" aria-hidden="true" focusable="false">
+          <use href="#i-bowl" />
+        </svg>Dieta
         <span class="tab-aviso">Em breve</span>
       </button>
       <button class="tab" data-acao="embreve" aria-disabled="true" aria-label="Evolução, indisponível nesta versão">
-        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg>Evolução
+        <svg class="ic" aria-hidden="true" focusable="false">
+          <use href="#i-chart-line" />
+        </svg>Evolução
         <span class="tab-aviso">Em breve</span>
       </button>
       <button class="tab" data-acao="embreve" aria-disabled="true" aria-label="Perfil, indisponível nesta versão">
-        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg>Perfil
+        <svg class="ic" aria-hidden="true" focusable="false">
+          <use href="#i-user" />
+        </svg>Perfil
         <span class="tab-aviso">Em breve</span>
       </button>
     </nav>
@@ -545,29 +1261,64 @@
       <p>Consultar esta ajuda não marca exercícios nem registra o treino.</p>
       <dl>
         <dt>Repetições</dt>
-        <dd>Uma repetição é um movimento completo do exercício. O número de repetições indica quantas vezes ele se repete em cada série.</dd>
+        <dd>Uma repetição é um movimento completo do exercício. O número de repetições indica quantas vezes ele se
+          repete em cada série.</dd>
         <dt>Séries</dt>
-        <dd>Uma série é um grupo de repetições. Por exemplo, 3 × 10 significa 3 séries de 10 repetições. Esse exemplo explica a leitura dos números, sem indicar quanto você deve fazer.</dd>
+        <dd>Uma série é um grupo de repetições. Por exemplo, 3 × 10 significa 3 séries de 10 repetições. Esse exemplo
+          explica a leitura dos números, sem indicar quanto você deve fazer.</dd>
         <dt>Carga</dt>
-        <dd>No TrainUp, é o valor em kg informado para o exercício. Registre o valor definido no seu treino; o aplicativo não escolhe nem recomenda uma carga para você.</dd>
+        <dd>No TrainUp, é o valor em kg informado para o exercício. Registre o valor definido no seu treino; o
+          aplicativo não escolhe nem recomenda uma carga para você.</dd>
         <dt>Peso corporal</dt>
-        <dd>O próprio corpo pode oferecer resistência ao exercício. Aqui, carga 0 aparece como “Peso corporal” e não acrescenta kg ao volume. Isso não significa ausência de esforço.</dd>
+        <dd>O próprio corpo pode oferecer resistência ao exercício. Aqui, carga 0 aparece como “Peso corporal” e não
+          acrescenta kg ao volume. Isso não significa ausência de esforço.</dd>
         <dt id="ajuda-volume">Volume no TrainUp</dt>
-        <dd>É a soma de séries × repetições × carga dos exercícios marcados. Exemplo de cálculo: 3 × 10 × 20 kg = 600 kg. É um indicador dos dados registrados, não uma medida de calorias, qualidade do treino ou esforço total.</dd>
+        <dd>É a soma de séries × repetições × carga dos exercícios marcados. Exemplo de cálculo: 3 × 10 × 20 kg = 600
+          kg. É um indicador dos dados registrados, não uma medida de calorias, qualidade do treino ou esforço total.
+        </dd>
         <dt>Marcar e registrar</dt>
-        <dd>Marcar indica o que você fez na lista. “Registrar treino” salva o resumo do dia. Se mudar algo depois, use “Atualizar registro” ou “Cancelar alterações”.</dd>
+        <dd>Marcar indica o que você fez na lista. “Registrar treino” salva o resumo do dia. Se mudar algo depois, use
+          “Atualizar registro” ou “Cancelar alterações”.</dd>
       </dl>
       <p>O treino inicial, o histórico pré-carregado e a meta semanal são exemplos de demonstração.</p>
-      <p>Conteúdo preliminar, ainda sem revisão profissional. Para aprender a execução de um movimento, peça orientação ao profissional que acompanha seu treino.</p>
+      <p>Conteúdo preliminar, ainda sem revisão profissional. Para aprender a execução de um movimento, peça orientação
+        ao profissional que acompanha seu treino.</p>
       <details>
         <summary>Fontes e limites desta ajuda</summary>
-        <p>Definições adaptadas do NHS, “How to improve your strength and flexibility” (revisão de 21/07/2026), e do Better Health Channel, “Resistance training – health benefits”. Consultadas em 25/10/2026.</p>
-        <p>Os cálculos e as ações descritos seguem as regras do TrainUp. Os textos desta ajuda funcionam sem internet. Os links abaixo abrem as fontes externas e precisam de conexão.</p>
-        <p><a href="https://www.nhs.uk/live-well/exercise/how-to-improve-strength-flexibility/" target="_blank" rel="noopener noreferrer">Fonte: NHS (em inglês)</a></p>
-        <p><a href="https://www.betterhealth.vic.gov.au/health/HealthyLiving/resistance-training-health-benefits" target="_blank" rel="noopener noreferrer">Fonte: Better Health Channel (em inglês)</a></p>
+        <p>Definições adaptadas do NHS, “How to improve your strength and flexibility” (revisão de 21/07/2026), e do
+          Better Health Channel, “Resistance training – health benefits”. Consultadas em 25/10/2026.</p>
+        <p>Os cálculos e as ações descritos seguem as regras do TrainUp. Os textos desta ajuda funcionam sem internet.
+          Os links abaixo abrem as fontes externas e precisam de conexão.</p>
+        <p><a href="https://www.nhs.uk/live-well/exercise/how-to-improve-strength-flexibility/" target="_blank"
+            rel="noopener noreferrer">Fonte: NHS (em inglês)</a></p>
+        <p><a href="https://www.betterhealth.vic.gov.au/health/HealthyLiving/resistance-training-health-benefits"
+            target="_blank" rel="noopener noreferrer">Fonte: Better Health Channel (em inglês)</a></p>
       </details>
     </div>
   </dialog>
+
+  <!-- PostHog: integração inicial para verificar a recepção de eventos. -->
+  <script>
+    !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } p || ((p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", p.onerror = function () { p = null }, (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r)); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], Object.defineProperty(u, "toString", { configurable: !0, enumerable: !0, writable: !0, value: function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e } }), Object.defineProperty(u.people, "toString", { configurable: !0, enumerable: !0, writable: !0, value: function () { return u.toString(1) + ".people (stub)" } }), o = "mh bh wh xh init Xh ed Gh Jh od ac Yh ad Uh fd pd gd md yd bd capture getExtension nd mr Zh Kh calculateEventProperties wd register register_once register_for_session unregister unregister_for_session Cd Vh Sd getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys onActiveMatchingSurveysChanged renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Td identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags reset Id shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep init startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty xd hd createPersonProfile setInternalOrTestUser $d Ih Ch opt_in_capturing opt_out_capturing Th has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing ld debug lc Fs getPageViewId captureTraceFeedback captureTraceMetric qh".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
+    posthog.init('phc_ykCWaNPWmJdh7YuxAN9btk29prUeArnUtxvp8nw3r5cW', {
+      api_host: 'https://us.i.posthog.com',
+      defaults: '2026-05-30',
+      person_profiles: 'identified_only',
+      disable_session_recording: true,
+      capture_heatmaps: false,
+      mask_all_text: true,
+      mask_all_element_attributes: true,
+      autocapture: false,
+      capture_pageview: false,
+      capture_pageleave: false,
+      disable_session_recording: true,
+      enable_heatmaps: false,
+      capture_performance: false,
+      loaded: function (ph) {
+        if (!new URLSearchParams(location.search).has('teste')) ph.capture('trainup_aberto', { origem: 'teste_integracao', versao: 'integracao_01' });
+      }
+    });
+  </script>
 
   <script>
     /* =====================================================
@@ -577,10 +1328,12 @@
        ===================================================== */
 
     // A avaliação tem dados separados; abrir/recarregar nunca reinicia uma sessão.
-    var CENARIO_AVALIACAO = new URLSearchParams(location.search).get('avaliacao');
+    var MODO_TESTE = new URLSearchParams(location.search).get('app') !== '1';
+    var CENARIO_AVALIACAO = MODO_TESTE ? 'sem-historico' : new URLSearchParams(location.search).get('avaliacao');
     if (CENARIO_AVALIACAO !== 'com-historico' && CENARIO_AVALIACAO !== 'sem-historico') { CENARIO_AVALIACAO = ''; }
-    var CHAVE = CENARIO_AVALIACAO ? 'trainup_avaliacao_' + CENARIO_AVALIACAO + '_v2' : 'trainup_treinos_v2';
-    var CHAVE_ANTIGA = CENARIO_AVALIACAO ? 'trainup_avaliacao_' + CENARIO_AVALIACAO + '_v1' : 'trainup_treinos_v1'; // preservada depois da migração
+    var PARTICIPANTE_TESTE = MODO_TESTE ? (new URLSearchParams(location.search).get('p') || '') : '';
+    var CHAVE = MODO_TESTE ? 'trainup_pesquisa_' + (PARTICIPANTE_TESTE || 'aguardando') + '_v2' : (CENARIO_AVALIACAO ? 'trainup_avaliacao_' + CENARIO_AVALIACAO + '_v2' : 'trainup_treinos_v2');
+    var CHAVE_ANTIGA = MODO_TESTE ? 'trainup_pesquisa_' + (PARTICIPANTE_TESTE || 'aguardando') + '_v1' : (CENARIO_AVALIACAO ? 'trainup_avaliacao_' + CENARIO_AVALIACAO + '_v1' : 'trainup_treinos_v1'); // preservada depois da migração
     var META_SEMANAL = 5;                // meta: 5 treinos por semana
     var estado = null;                   // aqui ficam todos os dados do app
     var ultimoEstado = null;
@@ -692,8 +1445,8 @@
 
     function estadoValido(dados, antigo) {
       if (!objetoValido(dados) || !nomeValido(dados.nomeTreino) || !dataValida(dados.diaMarcacao) ||
-          !numeroValido(dados.proximoId, 1, 2147483647, true) || !listaValida(dados.exercicios) ||
-          !Array.isArray(dados.historico) || dados.historico.length > 50000) { return false; }
+        !numeroValido(dados.proximoId, 1, 2147483647, true) || !listaValida(dados.exercicios) ||
+        !Array.isArray(dados.historico) || dados.historico.length > 50000) { return false; }
       var datas = {};
       var historicoValido = dados.historico.every(function (h) {
         if (!registroValido(h) || datas[h.data]) { return false; }
@@ -709,9 +1462,11 @@
     // Recupera só uma consulta segura; não regrava nem escolhe entre IDs/datas duplicados.
     function dadosParaConsulta(dados) {
       dados = objetoValido(dados) ? dados : {};
-      var consulta = { nomeTreino: nomeValido(dados.nomeTreino) ? dados.nomeTreino : 'Dados para consulta',
+      var consulta = {
+        nomeTreino: nomeValido(dados.nomeTreino) ? dados.nomeTreino : 'Dados para consulta',
         diaMarcacao: dataValida(dados.diaMarcacao) ? dados.diaMarcacao : hojeISO(),
-        proximoId: 1, exercicios: [], historico: [], referenciaRegistro: null };
+        proximoId: 1, exercicios: [], historico: [], referenciaRegistro: null
+      };
       var lista = Array.isArray(dados.exercicios) ? dados.exercicios : [];
       var ids = {};
       lista.forEach(function (ex) { if (exercicioValido(ex)) { ids[ex.id] = (ids[ex.id] || 0) + 1; } });
@@ -773,7 +1528,7 @@
         try {
           // Uma aba desatualizada não pode sobrescrever dados que acabou de desconhecer.
           if (localStorage.getItem(CHAVE) !== textoV2 ||
-              (textoV2 === null && localStorage.getItem(CHAVE_ANTIGA) !== textoAntigo)) {
+            (textoV2 === null && localStorage.getItem(CHAVE_ANTIGA) !== textoAntigo)) {
             bloquearAlteracoes = true;
             leituraConcluida = false;
             mensagem = 'Os dados salvos mudaram fora desta tela. A alteração não foi salva. Tente carregar novamente antes de continuar.';
@@ -895,12 +1650,12 @@
         diaMarcacao: hojeISO(),
         proximoId: 7,
         exercicios: [
-          { id: 1, nome: 'Supino reto',         series: 4, reps: 10, carga: 40, feito: false },
-          { id: 2, nome: 'Supino inclinado',    series: 3, reps: 10, carga: 30, feito: false },
-          { id: 3, nome: 'Crucifixo',           series: 3, reps: 12, carga: 14, feito: false },
-          { id: 4, nome: 'Tríceps na corda',    series: 4, reps: 12, carga: 25, feito: false },
-          { id: 5, nome: 'Tríceps testa',       series: 3, reps: 10, carga: 20, feito: false },
-          { id: 6, nome: 'Mergulho no banco',   series: 3, reps: 12, carga: 0,  feito: false }
+          { id: 1, nome: 'Supino reto', series: 4, reps: 10, carga: 40, feito: false },
+          { id: 2, nome: 'Supino inclinado', series: 3, reps: 10, carga: 30, feito: false },
+          { id: 3, nome: 'Crucifixo', series: 3, reps: 12, carga: 14, feito: false },
+          { id: 4, nome: 'Tríceps na corda', series: 4, reps: 12, carga: 25, feito: false },
+          { id: 5, nome: 'Tríceps testa', series: 3, reps: 10, carga: 20, feito: false },
+          { id: 6, nome: 'Mergulho no banco', series: 3, reps: 12, carga: 0, feito: false }
         ],
         historico: historico,
         referenciaRegistro: null
@@ -994,10 +1749,10 @@
       var mes = new Date().toLocaleDateString('pt-BR', { month: 'long' });
 
       var cards = [
-        { icone: 'barbell', cor: 'var(--primary)', rotulo: 'Treino',     valor: esc(estado.nomeTreino), sub: total + ' exercícios' },
-        { icone: 'check',    cor: 'var(--orange)',  rotulo: 'Concluídos', valor: feitos + ' / ' + total, sub: percentual + '% do treino' },
-        { icone: 'trending-up',    cor: 'var(--blue)',    rotulo: 'Volume',     valor: formatar(volumeFeito()) + ' kg', sub: 'carga total hoje' },
-        { icone: 'flame',    cor: 'var(--pink)',    rotulo: 'No mês',     valor: treinosDoMes() + ' treinos', sub: 'em ' + mes }
+        { icone: 'barbell', cor: 'var(--primary)', rotulo: 'Treino', valor: esc(estado.nomeTreino), sub: total + ' exercícios' },
+        { icone: 'check', cor: 'var(--orange)', rotulo: 'Concluídos', valor: feitos + ' / ' + total, sub: percentual + '% do treino' },
+        { icone: 'trending-up', cor: 'var(--blue)', rotulo: 'Volume', valor: formatar(volumeFeito()) + ' kg', sub: 'carga total hoje' },
+        { icone: 'flame', cor: 'var(--pink)', rotulo: 'No mês', valor: treinosDoMes() + ' treinos', sub: 'em ' + mes }
       ];
 
       document.getElementById('resumo').innerHTML = cards.map(function (c) {
@@ -1006,7 +1761,7 @@
           '<div class="resumo-valor">' + c.valor + '</div>' +
           '<div class="resumo-sub">' + c.sub + '</div>' +
           (c.rotulo === 'Volume' ? '<button class="link-ajuda" data-acao="ajuda" data-tema="volume">Entender volume</button>' : '') +
-        '</div>';
+          '</div>';
       }).join('');
     }
 
@@ -1026,8 +1781,10 @@
       progresso.setAttribute('aria-valuetext', feitos + ' de ' + total + ' exercícios marcados');
 
       var selo = document.getElementById('home-selo');
-      var nomes = { 'nao-iniciado': 'Não iniciado', 'em-andamento': 'Em andamento',
-        'todos-marcados': 'Todos marcados', 'registrado': 'Registrado ✓', 'pendente': 'Alterações pendentes' };
+      var nomes = {
+        'nao-iniciado': 'Não iniciado', 'em-andamento': 'Em andamento',
+        'todos-marcados': 'Todos marcados', 'registrado': 'Registrado ✓', 'pendente': 'Alterações pendentes'
+      };
       selo.textContent = nomes[situacao];
       selo.className = situacao === 'registrado' ? 'selo ok' : 'selo';
       document.getElementById('acao-registro').textContent = pendente || legado ? 'Atualizar registro' : 'Registrar treino';
@@ -1057,7 +1814,7 @@
             '<span class="marca">' + icone('check') + '</span>' +
             '<span class="item-info"><span class="item-nome" style="display:block">' + esc(ex.nome) + '</span>' +
             '<span class="item-det" style="display:block">' + detalhe(ex) + '</span></span>' +
-          '</button><button class="ajuda-ex" data-acao="ajuda" data-id="' + ex.id + '" aria-label="Informações de ' + esc(ex.nome) + '">Info</button></li>';
+            '</button><button class="ajuda-ex" data-acao="ajuda" data-id="' + ex.id + '" aria-label="Informações de ' + esc(ex.nome) + '">Info</button></li>';
         }).join('');
       }
 
@@ -1122,12 +1879,12 @@
           '<div class="item-det">' + ex.series + ' × ' + ex.reps + '</div>' +
           '<button class="link-ajuda" data-acao="ajuda" data-id="' + ex.id + '" aria-label="Informações de ' + esc(ex.nome) + '">Informações</button></div>' +
           '<div class="stepper">' +
-            '<button data-acao="menos" data-id="' + ex.id + '" aria-label="Diminuir carga de ' + esc(ex.nome) + '" aria-describedby="carga-' + ex.id + '">−</button>' +
-            '<span id="carga-' + ex.id + '">' + formatar(ex.carga) + ' kg</span>' +
-            '<button data-acao="mais" data-id="' + ex.id + '" aria-label="Aumentar carga de ' + esc(ex.nome) + '" aria-describedby="carga-' + ex.id + '">+</button>' +
+          '<button data-acao="menos" data-id="' + ex.id + '" aria-label="Diminuir carga de ' + esc(ex.nome) + '" aria-describedby="carga-' + ex.id + '">−</button>' +
+          '<span id="carga-' + ex.id + '">' + formatar(ex.carga) + ' kg</span>' +
+          '<button data-acao="mais" data-id="' + ex.id + '" aria-label="Aumentar carga de ' + esc(ex.nome) + '" aria-describedby="carga-' + ex.id + '">+</button>' +
           '</div>' +
           '<button class="btn-lixo" data-acao="remover" data-id="' + ex.id + '" aria-label="Remover exercício ' + esc(ex.nome) + '">' + icone('trash') + '</button>' +
-        '</li>';
+          '</li>';
       }).join('');
     }
 
@@ -1149,7 +1906,7 @@
           '<div class="item-info"><div class="item-nome">' + esc(h.treino) + '</div>' +
           '<div class="item-det">' + h.feitos + '/' + h.total + ' exercícios · ' + (h.feitos < h.total ? 'Parcial' : 'Completo') + '</div></div>' +
           '<div class="hist-volume">' + formatar(h.volume) + ' kg</div>' +
-        '</li>';
+          '</li>';
       }).join('');
     }
 
@@ -1166,8 +1923,10 @@
       var anterior = linha && linha.previousElementSibling;
       seguinte = seguinte && seguinte.querySelector('[data-id]');
       anterior = anterior && anterior.querySelector('[data-id]');
-      return { elemento: el, tela: tela, acao: el.dataset.acao, id: el.dataset.id, tema: el.dataset.tema,
-        seguinte: seguinte && seguinte.dataset.id, anterior: anterior && anterior.dataset.id };
+      return {
+        elemento: el, tela: tela, acao: el.dataset.acao, id: el.dataset.id, tema: el.dataset.tema,
+        seguinte: seguinte && seguinte.dataset.id, anterior: anterior && anterior.dataset.id
+      };
     }
 
     function controleDoFoco(foco, id) {
@@ -1463,6 +2222,7 @@
     }
 
     function resetarDados() {
+      if (MODO_TESTE && window.trainupPesquisaAtiva && window.trainupPesquisaAtiva()) { toast('Durante a avaliação, não é possível restaurar os dados.'); return; }
       if (!leituraConcluida) { toast('Carregue os dados antes de restaurar os exemplos'); return; }
       if (!bloquearAlteracoes && !conferirDia()) { return; }
       var dia = hojeISO();
@@ -1485,13 +2245,13 @@
       var acao = botao.dataset.acao;
       var id = Number(botao.dataset.id);
 
-      if (acao === 'aba')            { mostrarAba(botao.dataset.aba); }
-      else if (acao === 'ajuda')     { abrirAjuda(botao); }
+      if (acao === 'aba') { mostrarAba(botao.dataset.aba); }
+      else if (acao === 'ajuda') { abrirAjuda(botao); }
       else if (acao === 'fechar-ajuda') { document.getElementById('ajuda-treino').close(); }
       else if (acao === 'recarregar-dados') { iniciarDados(); }
-      else if (acao === 'embreve')   { toast('Em breve: fora do escopo desta versão'); }
+      else if (acao === 'embreve') { toast('Em breve: fora do escopo desta versão'); }
       else if (acao === 'notificacoes') { toast('Nenhuma notificação nova'); }
-      else if (acao === 'marcar')    { marcarExercicio(id); }
+      else if (acao === 'marcar') { marcarExercicio(id); }
       else if (acao === 'registrar') { registrarTreino(); }
       else if (acao === 'cancelar-alteracoes') { cancelarAlteracoes(); }
       else if (acao === 'conferir-dia' || acao === 'revisar-registro') {
@@ -1501,10 +2261,10 @@
         document.getElementById('card-treino').scrollIntoView({ block: 'start' });
         document.getElementById('card-treino').focus({ preventScroll: true });
       }
-      else if (acao === 'mais')      { mudarCarga(id, 2.5); }
-      else if (acao === 'menos')     { mudarCarga(id, -2.5); }
-      else if (acao === 'remover')   { removerExercicio(id); }
-      else if (acao === 'resetar')   { resetarDados(); }
+      else if (acao === 'mais') { mudarCarga(id, 2.5); }
+      else if (acao === 'menos') { mudarCarga(id, -2.5); }
+      else if (acao === 'remover') { removerExercicio(id); }
+      else if (acao === 'resetar') { resetarDados(); }
       else if (acao === 'novo-exercicio') {
         abrirTrecho('treinos', 'f-nome', 'center');
       }
@@ -1547,5 +2307,191 @@
 
     iniciarDados();
   </script>
+
+  <script>
+    /* Avaliação progressiva mobile — independente da interface normal do TrainUp. */
+    (function () {
+      const params = new URLSearchParams(location.search);
+      if (params.get('app') === '1') return;
+      const KEY = 'trainup_pesquisa_progressiva_v1';
+      const tasks = [
+        { id: 'T01', name: 'Consultar exercício', text: 'No treino de hoje (Peito + Tríceps), localize o exercício Supino reto e consulte as informações apresentadas. Quando considerar que terminou a consulta, finalize sua tentativa. Em seguida, você responderá uma pergunta sobre o exercício.', question: 'Após realizar a primeira série de 10 repetições do Supino reto, quantas séries ainda faltam?', options: [['2', '2 séries'], ['3', '3 séries'], ['4', '4 séries'], ['9', '9 séries'], ['nao_sei', 'Não sei responder']], correct: '3', limit: 180 },
+        { id: 'T02', name: 'Consultar a ajuda', text: 'Localize, na ajuda do TrainUp, a explicação do termo “Volume”. Leia a informação e retorne à tela do treino. Quando considerar que terminou, finalize sua tentativa. Em seguida, você responderá uma pergunta sobre esse conceito.', question: 'Se um exercício tem 3 séries de 10 repetições com 20 kg, qual é o volume total?', options: [['60', '60 kg'], ['200', '200 kg'], ['600', '600 kg'], ['900', '900 kg'], ['nao_sei', 'Não sei responder']], correct: '600', limit: 180 },
+        { id: 'T03', name: 'Registrar treino parcial', text: 'Imagine que você realizou somente os exercícios Supino reto e Supino inclinado do treino de hoje. Registre apenas esses dois exercícios como realizados e faça com que esse treino parcial fique registrado no aplicativo. Ao acreditar que concluiu, finalize sua tentativa.', question: null, limit: 300 },
+        { id: 'T04', name: 'Corrigir a carga', text: 'Depois de registrar o treino, você percebeu que usou 42,5 kg no Supino reto, e não os 40 kg informados. Corrija essa informação no treino já registrado, de modo que o histórico reflita a carga correta. Ao acreditar que concluiu, finalize sua tentativa.', question: null, limit: 240 },
+        { id: 'T05', name: 'Consultar histórico', text: 'Recarregue a página do TrainUp. Em seguida, localize no histórico o treino que você registrou hoje e consulte os resultados apresentados. Quando considerar que terminou, finalize sua tentativa. Você responderá uma pergunta sobre esse registro.', question: 'Ao consultar o histórico, como você classificaria o treino registrado?', options: [['completo', 'O treino foi realizado por completo'], ['parcial', 'O treino foi realizado parcialmente'], ['nenhum', 'Nenhum exercício foi realizado'], ['nao_sei', 'Não sei responder']], correct: 'parcial', limit: 180 }
+      ];
+      const sus = ['Eu gostaria de usar este sistema com frequência.', 'Achei o sistema desnecessariamente complexo.', 'Achei o sistema fácil de usar.', 'Acho que precisaria de ajuda de uma pessoa com conhecimentos técnicos para usar este sistema.', 'Achei que as várias funções do sistema estavam bem integradas.', 'Achei que havia muita inconsistência neste sistema.', 'Imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente.', 'Achei o sistema muito complicado de usar.', 'Senti-me confiante ao usar o sistema.', 'Precisei aprender muitas coisas antes de conseguir usar este sistema.'];
+      let s = null; try { s = JSON.parse(localStorage.getItem(KEY) || 'null') } catch (e) { }
+      const valid = s && /^P0[1-5]$/.test(s.participante) && ['intro', 'executando', 'consultando', 'pergunta', 'feedback', 'sus', 'fim'].includes(s.fase);
+      if (!valid) s = null;
+      const style = document.createElement('style'); style.textContent = `
+    #pesquisa-layer{position:fixed;inset:0;z-index:2147483600;overflow:auto;background:#f3f6fb;color:#18273c;font:16px/1.55 system-ui,-apple-system,sans-serif;padding:22px 16px max(30px,env(safe-area-inset-bottom));}
+    #pesquisa-layer[hidden]{display:none!important}#pesquisa-card{max-width:520px;margin:14px auto;background:#fff;border:1px solid #dbe4f0;border-radius:20px;padding:24px;box-shadow:0 10px 35px #17243b13}
+    #pesquisa-layer h1{font-size:23px;line-height:1.25;margin:10px 0 14px}#pesquisa-layer p{margin:10px 0 16px}#pesquisa-layer label{display:block;margin:12px 0 6px;font-weight:600}
+    #pesquisa-layer input:not([type=radio]):not([type=checkbox]),#pesquisa-layer textarea,#pesquisa-layer select{width:100%;padding:12px;border:1px solid #9caec6;border-radius:10px;font:inherit;background:white;color:#17243b}
+    #pesquisa-layer textarea{min-height:90px}#pesquisa-layer button{width:100%;border:0;border-radius:12px;padding:14px;background:#2468b5;color:white;font:600 15px system-ui;min-height:48px;margin-top:12px;cursor:pointer}
+    #pesquisa-layer button.alt{background:#eaf0f8;color:#243951}#pesquisa-layer .tag{font-size:12px;letter-spacing:.06em;font-weight:750;color:#2864ac}
+    #pesquisa-layer .note{font-size:14px;color:#526079}#pesquisa-layer .progress{display:flex;gap:5px;margin:12px 0 20px}#pesquisa-layer .progress i{height:6px;flex:1;border-radius:5px;background:#dce5f0}#pesquisa-layer .progress i.on{background:#2468b5}
+    #pesquisa-layer fieldset{border:1px solid #dbe4f0;border-radius:12px;margin:16px 0;padding:12px}#pesquisa-layer fieldset label{font-weight:400;display:flex;align-items:start;gap:9px}
+    #pesquisa-layer .susitem{border-bottom:1px solid #dbe4f0;padding:16px 0}#pesquisa-layer .scale{display:flex;justify-content:space-between}#pesquisa-layer .scale label{text-align:center;font-weight:400;flex:1}
+    #pesquisa-exit{display:none!important}
+    #pesquisa-topbar{position:fixed;z-index:2147483590;top:max(4px,env(safe-area-inset-top));left:8px;right:8px;max-width:620px;margin:auto;height:42px;box-sizing:border-box;padding:5px 7px;background:rgba(22,32,51,.73);color:white;border:1px solid rgba(255,255,255,.25);border-radius:13px;box-shadow:0 3px 12px #0002;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:12px system-ui,sans-serif;display:flex;align-items:center;gap:6px}
+    #pesquisa-topbar[hidden]{display:none!important}
+    #pesquisa-topbar .p-topline{display:flex;align-items:center;gap:7px;min-width:0;flex:1}
+    #pesquisa-topbar .p-badge{font-size:10px;letter-spacing:.015em;font-weight:750;color:#e2edff;white-space:nowrap}
+    #pesquisa-topbar .p-clock{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap;font-size:12px}
+    #pesquisa-topbar .p-actions{display:flex;gap:5px;flex:none;margin-left:auto}
+    #pesquisa-topbar button{height:30px;min-height:30px;padding:0 9px;border:1px solid rgba(255,255,255,.35);border-radius:9px;background:rgba(255,255,255,.14);color:white;font:600 11px system-ui;cursor:pointer;white-space:nowrap}
+    #pesquisa-topbar button.p-primary{background:rgba(255,255,255,.94);color:#18273c;border-color:transparent}
+    @media(max-width:380px){#pesquisa-topbar{left:4px;right:4px;padding:4px 5px;gap:4px}#pesquisa-topbar .p-badge{font-size:9px}#pesquisa-topbar .p-topline{gap:4px}#pesquisa-topbar button{padding:0 7px;font-size:10px}}
+    #pesquisa-instructions{position:fixed;inset:0;z-index:2147483610;background:rgba(9,16,27,.48);display:flex;align-items:flex-start;justify-content:center;padding:100px 16px 20px}
+    #pesquisa-instructions[hidden]{display:none!important}
+    #pesquisa-instructions .p-popup{background:#fff;color:#18273c;border:2px solid #5177ad;box-shadow:0 16px 45px #0005;border-radius:17px;max-width:450px;width:100%;padding:20px;font:15px/1.5 system-ui}
+    #pesquisa-instructions .p-popup button{border:0;background:#2468b5;color:white;border-radius:10px;padding:12px 16px;width:100%;font-weight:700}
+    body.pesquisa-executando{scroll-padding-top:58px}
+    #pesquisa-layer .choice{display:flex;align-items:center;gap:12px;border:1px solid #dbe4f0;border-radius:12px;padding:12px;margin:9px 0;font-weight:400;cursor:pointer}
+    #pesquisa-layer .choice input{width:20px;height:20px;flex:none}
+    #pesquisa-layer .secondary-action{background:#eaf0f8;color:#243951}
+    body.pesquisa-pausa{overflow:hidden!important}
+  `; document.head.appendChild(style);
+      const layer = document.createElement('section'); layer.id = 'pesquisa-layer'; layer.setAttribute('aria-label', 'Etapas da avaliação TrainUp'); layer.innerHTML = '<div id="pesquisa-card"></div>'; document.body.appendChild(layer);
+      const exit = document.createElement('button'); exit.id = 'pesquisa-exit'; exit.textContent = 'Responder questão'; exit.hidden = true; document.body.appendChild(exit);
+      const topbar = document.createElement('aside'); topbar.id = 'pesquisa-topbar'; topbar.hidden = true; topbar.setAttribute('aria-label', 'Controle externo da avaliação, não faz parte do TrainUp');
+      topbar.innerHTML = '<span class="p-clock" id="p-time" aria-label="Tempo da tarefa">00:00</span><div class="p-actions"><button id="p-instructions" type="button">ⓘ Instrução</button><button id="p-finish" class="p-primary" type="button">Finalizar →</button></div>';
+      document.body.appendChild(topbar);
+      const instructionPopup = document.createElement('div'); instructionPopup.id = 'pesquisa-instructions'; instructionPopup.hidden = true; instructionPopup.innerHTML = '<div class="p-popup" role="dialog" aria-modal="true" aria-label="Instrução da tarefa"><h2 id="p-instruction-title" style="margin:9px 0;font-size:20px"></h2><p id="p-instruction-text"></p><button id="p-instruction-close" type="button">Voltar ao TrainUp</button></div>';
+      document.body.appendChild(instructionPopup);
+      topbar.querySelector('#p-instructions').onclick = () => {
+        if (!s || !['executando', 'consultando'].includes(s.fase) || s.indice >= tasks.length) return;
+        s.reaberturasInstrucao = (s.reaberturasInstrucao || 0) + 1;
+        const ultimaNavegacao = [...(s.acoes || [])].reverse().find(a => a.type === 'navegacao');
+        const etapaOrigem = ultimaNavegacao?.aba || s.fase;
+        persist();
+        emit('instrucao_reaberta', {
+          tarefa_id: tasks[s.indice].id,
+          participante_id: s.participante,
+          sessao_avaliacao: s.execucao,
+          tempo_decorrido_seg: Math.max(0, Math.floor((Date.now() - s.inicio) / 1000)),
+          numero_consulta: s.reaberturasInstrucao,
+          etapa_origem: etapaOrigem
+        });
+        instructionPopup.querySelector('#p-instruction-title').textContent = tasks[s.indice].name;
+        instructionPopup.querySelector('#p-instruction-text').textContent = tasks[s.indice].text;
+        instructionPopup.hidden = false;
+      };
+      instructionPopup.querySelector('#p-instruction-close').onclick = () => instructionPopup.hidden = true;
+      topbar.querySelector('#p-finish').onclick = () => { if (s?.fase === 'consultando') { s.fase = 'pergunta'; persist(); show(); return; } if (s?.fase === 'executando') end('finalizou_tentativa'); };
+      function updateTopbar() { const active = !!s && ['executando', 'consultando'].includes(s.fase); topbar.hidden = !active; document.body.classList.toggle('pesquisa-executando', active); if (!active) return; topbar.querySelector('#p-finish').textContent = s.fase === 'consultando' ? 'Pergunta →' : 'Finalizar →'; const elapsed = Math.max(0, Math.floor((Date.now() - s.inicio) / 1000)); topbar.querySelector('#p-time').textContent = String(Math.floor(elapsed / 60)).padStart(2, '0') + ':' + String(elapsed % 60).padStart(2, '0'); }
+      const card = layer.firstElementChild;
+      function esc(x) { return String(x).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])) }
+      function persist() { localStorage.setItem(KEY, JSON.stringify(s)) }
+      function emit(name, props = {}) { if (!s) return; try { posthog.capture(name, { participante: s.participante, execucao: s.execucao, tarefa: s.indice < 5 ? tasks[s.indice].id : null, versao: 'barra_10', ...props }) } catch (e) { } }
+      function progress() { return '<div class="progress">' + tasks.map((_, i) => '<i class="' + (i <= s.indice ? 'on' : '') + '"></i>').join('') + '</div>' }
+      function show() {
+        if (!s) { card.innerHTML = '<div class="tag">PESQUISA DE USABILIDADE</div><h1>Avaliação do TrainUp</h1><p>Você realizará cinco tarefas, uma de cada vez, utilizando o aplicativo. Suas ações e respostas serão registradas com um código, sem nome ou e-mail.</p><label for="p-code">Código fornecido pelo pesquisador</label><select id="p-code">' + ['P01', 'P02', 'P03', 'P04', 'P05'].map(p => '<option>' + p + '</option>').join('') + '</select><label style="display:flex;gap:10px;font-weight:400"><input id="p-consent" type="checkbox">Concordo com o registro pseudônimo das interações, tempos e respostas para esta pesquisa. Sei que posso interromper minha participação.</label><p class="note">A barra semitransparente no topo pertence à pesquisa, não ao TrainUp. Durante cada tarefa, use “ⓘ Instrução” para reler o objetivo e “Finalizar” quando quiser encerrar sua tentativa, mesmo que não tenha conseguido. Não haverá indicação de acerto ou erro. Não há gravação de tela. Não utilize dados pessoais nos campos de resposta.</p><button id="p-start">Iniciar avaliação</button>'; card.querySelector('#p-start').onclick = start; }
+        else if (s.fase === 'intro') { const t = tasks[s.indice]; card.innerHTML = '<div class="tag">' + s.participante + ' · TAREFA ' + (s.indice + 1) + ' DE 5</div>' + progress() + '<h1>' + esc(t.name) + '</h1><p>' + esc(t.text) + '</p><p class="note">Você terá até ' + Math.floor(t.limit / 60) + ' minutos para tentar. </p><button id="p-go">Iniciar tarefa</button>'; card.querySelector('#p-go').onclick = begin; }
+        else if (s.fase === 'executando') { layer.hidden = true; exit.hidden = true; document.body.classList.remove('pesquisa-pausa'); updateTopbar(); return; }
+        else if (s.fase === 'consultando') { layer.hidden = true; exit.hidden = true; document.body.classList.remove('pesquisa-pausa'); updateTopbar(); return; }
+        else if (s.fase === 'pergunta') {
+          const t = tasks[s.indice];
+          // Apenas tarefas de compreensão possuem pergunta: T01, T02 e T05.
+          const options = '<p>' + esc(t.question) + '</p>' + t.options.map(o => '<label class="choice"><input type="radio" name="p-answer" value="' + esc(o[0]) + '" ' + (s.rascunho === o[0] ? 'checked' : '') + '><span>' + esc(o[1]) + '</span></label>').join('');
+          card.innerHTML = '<div class="tag">' + t.id + ' · QUESTÃO DE COMPREENSÃO</div>' + progress() + '<h1>' + esc(t.name) + '</h1>' + options + '<button id="p-consult" class="secondary-action" type="button">Consultar o TrainUp novamente</button><button id="p-next">Confirmar resposta e continuar</button>';
+          card.querySelectorAll('input[name="p-answer"]').forEach(el => el.onchange = () => { s.rascunho = el.value; persist() });
+          card.querySelector('#p-consult').onclick = () => { s.fase = 'consultando'; s.consultas = (s.consultas || 0) + 1; persist(); emit('consulta_adicional', { quantidade: s.consultas }); show() };
+          card.querySelector('#p-next').onclick = next;
+        }
+        else if (s.fase === 'feedback') {
+          card.innerHTML = '<div class="tag">AVALIAÇÃO DAS TAREFAS CONCLUÍDA</div><h1>Comentário final (opcional)</h1><p>Durante a utilização do TrainUp, você encontrou alguma dificuldade ou informação que não ficou clara? Se sim, descreva brevemente.</p><textarea id="p-feedback" placeholder="Sua resposta (opcional)">' + esc(s.comentarioFinal || '') + '</textarea><button id="p-feedback-next">Continuar para o questionário final</button>';
+          card.querySelector('#p-feedback').oninput = e => { s.comentarioFinal = e.target.value; persist() };
+          card.querySelector('#p-feedback-next').onclick = () => { emit('comentario_final', { comentario: (s.comentarioFinal || '').trim() }); s.fase = 'sus'; persist(); show() };
+        }
+        else if (s.fase === 'sus') { card.innerHTML = '<div class="tag">QUESTIONÁRIO FINAL</div><h1>Escala de Usabilidade (SUS)</h1><p class="note">1 = discordo totalmente; 5 = concordo totalmente.</p><form id="p-sus">' + sus.map((q, i) => '<div class="susitem"><strong>' + (i + 1) + '. ' + esc(q) + '</strong><div class="scale">' + [1, 2, 3, 4, 5].map(v => '<label><input type="radio" name="s' + i + '" value="' + v + '" required>' + v + '</label>').join('') + '</div></div>').join('') + '<button type="submit">Finalizar avaliação</button></form>'; card.querySelector('#p-sus').onsubmit = finishSUS; }
+        else card.innerHTML = '<div class="tag">AVALIAÇÃO FINALIZADA</div><h1>Obrigado pela participação!</h1><p>Suas respostas foram registradas. Você pode fechar esta página.</p>';
+        layer.hidden = false; exit.hidden = true; instructionPopup.hidden = true; updateTopbar(); document.body.classList.add('pesquisa-pausa'); layer.scrollTop = 0;
+      }
+      function start() { if (!card.querySelector('#p-consent').checked) { alert('Confirme o aceite para começar.'); return } const p = card.querySelector('#p-code').value; if (!confirm('Iniciar uma nova avaliação para ' + p + ' neste navegador?')) return; try { posthog.reset() } catch (e) { }; localStorage.removeItem('trainup_pesquisa_' + p + '_v2'); localStorage.removeItem('trainup_pesquisa_' + p + '_v1'); s = { participante: p, execucao: p + '_' + Date.now(), indice: 0, fase: 'intro', respostas: [], inicio: null, acoes: [], iniciadaEm: Date.now() }; persist(); location.href = new URL(location.pathname + '?teste=1&p=' + p, location.href).href; }
+      // A página reinicia após a escolha do participante, para carregar dados isolados.
+      if (s && params.get('p') !== s.participante) { location.replace(new URL(location.pathname + '?teste=1&p=' + s.participante, location.href).href); return }
+      if (s && s.fase !== 'fim') { try { posthog.identify('trainup_' + s.execucao) } catch (e) { } }
+      function track(type, props = {}) { if (!s || s.fase !== 'executando') return; const item = { type, ts: Date.now(), ...props }; s.acoes.push(item); if (s.acoes.length > 400) s.acoes.shift(); persist(); emit('acao_tarefa', item) }
+      function begin() { s.fase = 'executando'; s.inicio = Date.now(); s.acoes = []; s.rascunho = ''; s.consultas = 0; s.reaberturasInstrucao = 0; persist(); emit('tarefa_iniciada'); show(); }
+      function record() { return registroDaData(hojeISO()) }
+      function check() {
+        const t = tasks[s.indice].id, a = s.acoes, has = (type, pred = () => true) => a.some(x => x.type === type && pred(x)), r = record(), e1 = acharExercicio(1), e2 = acharExercicio(2);
+        if (t === 'T01') return has('navegacao', x => x.aba === 'treinos') || has('consulta_exercicio', x => x.id === 1);
+        if (t === 'T02') return has('ajuda_volume') && has('ajuda_fechada');
+        if (t === 'T03') return !!r && r.feitos === 2 && r.total === 6 && r.volume === 2500 && e1?.feito && e2?.feito && has('registro_salvo');
+        if (t === 'T04') return !!r && r.feitos === 2 && r.total === 6 && r.volume === 2600 && e1?.carga === 42.5 && estado.historico.filter(h => h.data === hojeISO()).length === 1 && has('registro_atualizado');
+        return !!r && r.feitos === 2 && r.volume === 2600 && has('historico_aberto') && has('app_recarregado');
+      }
+      function end(reason) {
+        if (!s || s.fase !== 'executando') return;
+        const t = tasks[s.indice], seconds = Math.round((Date.now() - s.inicio) / 1000);
+        s.pendente = { id: t.id, encerramento: reason, duracao_segundos: seconds, sucesso_observavel: check(), acoes: s.acoes.length };
+        emit('tarefa_encerrada', s.pendente);
+        // T03/T04 não exigem pergunta adicional: a própria ação é o resultado.
+        if (!t.options || reason === 'tempo_esgotado') { finalizeTask(null); return }
+        s.fase = 'pergunta'; persist(); show();
+      }
+      function askFailure() {
+        const modal = document.createElement('div'); modal.id = 'p-end-modal'; modal.style.cssText = 'position:fixed;inset:0;z-index:2147483610;background:#0008;display:grid;place-items:center;padding:18px';
+        modal.innerHTML = '<div style="max-width:360px;width:100%;background:white;color:#18273c;border-radius:16px;padding:22px;font:16px system-ui"><strong>Não conseguiu realizar a tarefa?</strong><p>Você pode continuar tentando ou passar para a próxima tarefa.</p><button id="p-fail" style="display:block;width:100%;padding:13px;margin:10px 0;background:#2468b5;color:white;border:0;border-radius:9px">Não consegui — avançar</button><button id="p-cancel" style="display:block;width:100%;padding:13px;background:white;color:#18273c;border:1px solid #bbc7d7;border-radius:9px">Continuar tentando</button></div>';
+        document.body.appendChild(modal);
+        modal.querySelector('#p-fail').onclick = () => { modal.remove(); end('nao_conseguiu') };
+        modal.querySelector('#p-cancel').onclick = () => modal.remove();
+      }
+      exit.onclick = () => {
+        if (!s) return;
+        if (s.fase === 'consultando') { s.fase = 'pergunta'; persist(); show(); return }
+        if (s.fase !== 'executando') return;
+        if (tasks[s.indice].options) { end('questao_aberta') } else { askFailure() }
+      };
+      // Desistência discreta nas tarefas de consulta, sem outro botão de conclusão.
+      const giveUp = document.createElement('button'); giveUp.id = 'pesquisa-desistir'; giveUp.textContent = 'Não consegui'; giveUp.hidden = true; document.body.appendChild(giveUp);
+      giveUp.onclick = () => { if (s?.fase === 'executando') askFailure() };
+      const extraStyle = document.createElement('style'); extraStyle.textContent = '#pesquisa-desistir{display:none!important; position:fixed;z-index:2147483590;bottom:max(63px,calc(env(safe-area-inset-bottom) + 51px));left:50%;transform:translateX(-50%);border:0;background:#fff;color:#34445a;border-radius:999px;padding:7px 13px;font:12px system-ui;box-shadow:0 2px 10px #0002}#pesquisa-desistir[hidden]{display:none!important}'; document.head.appendChild(extraStyle);
+      const originalShow = show;
+      show = function () { originalShow(); giveUp.hidden = !(s?.fase === 'executando' && !!tasks[s.indice].options) };
+      function next() {
+        const t = tasks[s.indice];
+        const answer = s.rascunho;
+        if (!answer) { alert('Selecione uma alternativa, inclusive “Não sei responder” se for o caso.'); return }
+        finalizeTask(answer);
+      }
+      function finalizeTask(answer) {
+        const t = tasks[s.indice];
+        const item = { ...s.pendente, resposta: answer, acertou: t.options && answer !== null ? answer === t.correct : null, consultas_adicionais: s.consultas || 0 };
+        s.respostas.push(item); emit('resposta_tarefa', item);
+        s.pendente = null; s.indice++; s.fase = s.indice === 5 ? 'feedback' : 'intro'; s.inicio = null; s.acoes = []; s.rascunho = ''; s.consultas = 0; persist();
+        if (s.indice === 4) { s.precisaRecarregar = true; persist() }
+        if (s.indice === 3 && !checkPrerequisite()) { prepareT04() }
+        show();
+      }
+      function checkPrerequisite() { const r = record(); return !!r && r.feitos === 2 && r.volume === 2500 }
+      function prepareT04() {// Estado controlado para permitir T04 mesmo se T03 não foi concluída.
+        if (!estado || bloquearAlteracoes) return; const e1 = acharExercicio(1), e2 = acharExercicio(2); if (!e1 || !e2) return;
+        estado.exercicios.forEach(e => { e.feito = e.id === 1 || e.id === 2 }); e1.carga = 40; e2.carga = 30;
+        const r = { data: hojeISO(), treino: estado.nomeTreino, feitos: 2, total: estado.exercicios.length, volume: 2500 }; estado.historico = estado.historico.filter(x => x.data !== r.data); estado.historico.push(r); estado.referenciaRegistro = { data: r.data, nomeTreino: estado.nomeTreino, exercicios: copiar(estado.exercicios) };
+        if (salvar()) { render(); emit('estado_preparado', { para: 'T04', motivo: 'pre_requisito_t03_ausente' }) } else { emit('falha_preparacao', { para: 'T04' }) }
+      }
+      function finishSUS(e) { e.preventDefault(); const f = new FormData(e.target), values = sus.map((_, i) => Number(f.get('s' + i))); if (values.some(x => !x)) { alert('Responda às dez questões.'); return } const score = values.reduce((a, v, i) => a + (i % 2 === 0 ? v - 1 : 5 - v), 0) * 2.5; emit('sus_finalizado', { respostas: values, pontuacao: score }); s.sus = { respostas: values, pontuacao: score }; s.fase = 'fim'; persist(); emit('avaliacao_finalizada', { total_tarefas: s.respostas.length }); show() }
+      // Instrumentação do aplicativo: funções originais continuam executando normalmente.
+      const originalAba = mostrarAba; mostrarAba = function (nome) { const result = originalAba.apply(this, arguments); track('navegacao', { aba: nome }); return result };
+      const originalAjuda = abrirAjuda; abrirAjuda = function (botao) { const result = originalAjuda.apply(this, arguments); track('ajuda_aberta'); if (botao?.dataset?.tema === 'volume') track('ajuda_volume'); return result };
+      document.getElementById('ajuda-treino').addEventListener('close', () => track('ajuda_fechada'));
+      const originalMarcar = marcarExercicio; marcarExercicio = function (id) { const result = originalMarcar.apply(this, arguments); track('exercicio_marcado', { id, feito: !!acharExercicio(id)?.feito }); return result };
+      const originalCarga = mudarCarga; mudarCarga = function (id, passo) { const result = originalCarga.apply(this, arguments); track('carga_alterada', { id, carga: acharExercicio(id)?.carga }); return result };
+      const originalRegistrar = registrarTreino; registrarTreino = function () { const before = JSON.stringify(record()); const result = originalRegistrar.apply(this, arguments); const after = record(); if (JSON.stringify(after) !== before && after) { track(before === 'undefined' ? 'registro_salvo' : 'registro_atualizado', { feitos: after.feitos, volume: after.volume }); if (s?.fase === 'executando' && ['T03', 'T04'].includes(tasks[s.indice].id) && check()) { emit('objetivo_detectado', { tarefa: tasks[s.indice].id }); } } return result };
+      document.addEventListener('click', e => { const b = e.target.closest('[data-acao]'); if (!b) return; track('clique', { acao: b.dataset.acao, tema: b.dataset.tema || null }); if (b.dataset.acao === 'historico') track('historico_aberto'); if (b.dataset.id === '1') track('consulta_exercicio', { id: 1 }) }, true);
+      const nav = performance.getEntriesByType('navigation')[0]; if (s?.fase === 'executando' && nav?.type === 'reload') { track('app_recarregado') }
+      // Ao recarregar durante T05, o sinal de reload fica registrado na sessão.
+      if (s?.fase === 'executando' && tasks[s.indice].id === 'T05' && s.precisaRecarregar) { s.precisaRecarregar = false; persist() }
+      let timer = setInterval(() => { updateTopbar(); if (s?.fase !== 'executando') return; const limit = tasks[s.indice].limit * 1000; if (Date.now() - s.inicio >= limit) { end('tempo_esgotado') } }, 1000);
+      show();
+    })();
+  </script>
 </body>
+
 </html>
