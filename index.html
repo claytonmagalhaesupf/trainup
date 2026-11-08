@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0F6E56">
+  <title>TrainUp</title>
+
+  <style>
+    /* ============ CORES (mesma paleta do preview) ============ */
+    :root {
+      --primary: #0F6E56;
+      --primary-light: #9FE1CB;
+      --bg: #F7F8F5;
+      --surface: #FFFFFF;
+      --text: #2C2C2A;
+      --text2: #5F5E5A;
+      --muted: #888780;
+      --border: #E5E5E0;
+      --orange: #BA7517;
+      --blue: #378ADD;
+      --pink: #D4537E;
+      --skeleton: #F1EFE8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    ul { list-style: none; }
+    .so-leitor { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    button:focus-visible, input:focus-visible, summary:focus-visible, a:focus-visible {
+      outline: 2px solid var(--primary); outline-offset: 2px;
+    }
+    .header button:focus-visible { outline-color: #fff; }
+    #card-treino:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #E9ECE7;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    /* ============ "CELULAR" (moldura só aparece no computador) ============ */
+    .phone {
+      position: relative;
+      width: 390px;
+      height: min(844px, calc(100vh - 32px));
+      background: var(--bg);
+      border: 8px solid #20241f;
+      border-radius: 40px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    /* No celular de verdade, ocupa a tela toda */
+    @media (max-width: 500px) {
+      body { padding: 0; background: var(--bg); }
+      .phone {
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+
+    .tela { display: none; flex: 1; min-height: 0; overflow-y: auto; }
+    .tela.ativa { display: block; }
+
+    /* ============ ÍCONES ============ */
+    .ic {
+      width: 20px; height: 20px;
+      fill: none; stroke: currentColor;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ============ CABEÇALHO VERDE ============ */
+    .header {
+      background: var(--primary);
+      color: #fff;
+      padding: 20px 20px 30px;
+      border-radius: 0 0 24px 24px;
+    }
+    .header-topo {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 18px;
+    }
+    .header-data { font-size: 12px; opacity: 0.9; }
+    .btn-sino { color: #fff; width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .btn-sino .ic { width: 18px; height: 18px; }
+    .header-usuario { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 15px;
+    }
+    .saudacao { font-size: 13px; opacity: 0.9; }
+    .aviso-avaliacao { margin-top: 12px; font-size: 12px; line-height: 1.5; color: #fff; }
+    .nome-usuario { font-size: 20px; font-weight: 600; margin-top: 2px; }
+    .titulo-tela { font-size: 22px; font-weight: 600; }
+    .subtitulo-tela { font-size: 13px; opacity: 0.9; margin-top: 4px; overflow-wrap: anywhere; }
+
+    /* ============ CONTEÚDO ============ */
+    .conteudo { padding: 0 16px 28px; }
+    .secao-titulo {
+      font-size: 14px; font-weight: 600;
+      margin: 20px 0 10px 4px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    /* ---- Resumo do dia (grade 2x2) ---- */
+    .grade-resumo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .resumo-topo { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 11px; font-weight: 600; }
+    .resumo-topo .ic { width: 16px; height: 16px; }
+    /* O texto usa contraste maior; os ícones conservam os acentos originais. */
+    .resumo-topo span { color: var(--text2); }
+    .resumo-valor { font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+    .resumo-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+    /* ---- Ações rápidas ---- */
+    .acoes { display: flex; gap: 10px; }
+    .acao {
+      flex: 1;
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 6px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .acao .ic { width: 18px; height: 18px; }
+    .acao.principal { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .acao:active { transform: scale(0.97); }
+
+    /* ---- Cartão "Treino de hoje" ---- */
+    .card-topo { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .card-titulo { font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+    .card-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+    .selo {
+      font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px;
+      background: var(--skeleton); color: var(--text2);
+    }
+    .selo.ok { background: #E1F5EE; color: var(--primary); }
+    #card-treino .card-topo { flex-wrap: wrap; gap: 8px; }
+    .registro-info { font-size: 12px; color: var(--text2); line-height: 1.5; margin-bottom: 10px; }
+    .registro-info button, .btn-cancelar { color: var(--primary); font-size: 13px; text-decoration: underline; padding: 12px 4px; min-height: 44px; }
+    .registro-info button { display: block; }
+    .btn-cancelar { margin-bottom: 4px; }
+
+    .barra { height: 8px; background: var(--skeleton); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .barra-preenchida { height: 100%; width: 0; background: var(--primary); border-radius: 8px; transition: width 0.3s; }
+
+    /* Linha de exercício na home (toque para marcar) */
+    .item {
+      width: 100%;
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 4px;
+      text-align: left;
+      border-top: 0.5px solid var(--border);
+    }
+    .lista li:first-child .item { border-top: none; }
+    .marca {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 2px solid var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      color: transparent;
+      flex-shrink: 0;
+    }
+    .marca .ic { width: 14px; height: 14px; stroke-width: 3; }
+    .item.feito .marca { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .item-info { flex: 1; min-width: 0; }
+    .item-nome { font-size: 14px; font-weight: 500; overflow-wrap: anywhere; }
+    .item-det { font-size: 12px; color: var(--text2); margin-top: 2px; }
+    .item.feito .item-nome { color: var(--text2); text-decoration: line-through; }
+
+    .dica { font-size: 12px; color: var(--text2); margin-top: 10px; text-align: center; }
+    .nota-exemplo { font-size: 12px; line-height: 1.4; color: var(--text2); margin: 10px 0; }
+    .link-ajuda { color: var(--primary); text-decoration: underline; font-size: 12px; line-height: 1.4; padding: 10px 0; min-height: 44px; text-align: left; }
+    .linha-home { display: flex; align-items: center; gap: 4px; }
+    .linha-home .item { flex: 1; min-width: 0; }
+    .ajuda-ex { color: var(--primary); font-size: 12px; text-decoration: underline; min-width: 44px; min-height: 44px; flex-shrink: 0; }
+    .link-ajuda:focus-visible, .ajuda-ex:focus-visible, .ajuda-fechar:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .ajuda-dialogo {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: min(358px, calc(100% - 32px)); max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px);
+      padding: 0; border: 1px solid var(--border); border-radius: 16px;
+      background: var(--surface); color: var(--text); overflow-y: auto;
+    }
+    .ajuda-dialogo::backdrop { background: rgba(0, 0, 0, .4); }
+    .ajuda-topo { position: sticky; top: 0; background: var(--surface); padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .ajuda-topo h2 { font-size: 16px; }
+    .ajuda-fechar { color: var(--primary); font-size: 14px; text-decoration: underline; min-height: 44px; }
+    .ajuda-corpo { padding: 16px; font-size: 13px; line-height: 1.5; }
+    .ajuda-corpo p { margin-bottom: 12px; }
+    .ajuda-corpo dt { font-weight: 600; margin-top: 12px; }
+    #ajuda-volume { scroll-margin-top: 110px; }
+    .ajuda-corpo dd { margin: 4px 0 12px; }
+    .ajuda-corpo summary { cursor: pointer; color: var(--primary); padding: 10px 0; min-height: 44px; }
+    .ajuda-corpo a { color: var(--primary); overflow-wrap: anywhere; }
+    #ajuda-contexto { overflow-wrap: anywhere; background: var(--bg); border-radius: 8px; padding: 10px; }
+    .vazio { font-size: 13px; color: var(--text2); text-align: center; padding: 14px 0; }
+
+    /* ---- Progresso semanal ---- */
+    .semana { display: flex; gap: 4px; margin: 14px 0; }
+    .dia { flex: 1; text-align: center; }
+    .dia-barra { height: 34px; border-radius: 6px; background: var(--skeleton); color: #0B5945; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .dia.feito .dia-barra { background: var(--primary); color: #fff; }
+    .dia.hoje:not(.feito) .dia-barra { background: var(--primary-light); border: 1px dashed var(--primary); }
+    .dia-letra { font-size: 10px; color: var(--text2); margin-top: 6px; }
+    .dia.hoje .dia-letra::after { content: 'Hoje'; display: block; font-weight: 600; color: var(--primary); }
+    .estatisticas {
+      display: flex; justify-content: space-between;
+      padding-top: 12px; border-top: 0.5px solid var(--border);
+    }
+    .est-rotulo { font-size: 11px; color: var(--text2); }
+    .est-valor { font-size: 15px; font-weight: 600; margin-top: 2px; }
+
+    /* ============ TELA DE TREINOS ============ */
+    .linha-ex {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      padding: 12px 0;
+      border-top: 0.5px solid var(--border);
+    }
+    .lista li:first-child .linha-ex { border-top: none; }
+    /* Nome e informações ficam acima para os alvos não disputarem espaço. */
+    .linha-ex .item-info { flex-basis: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+    .linha-ex .item-nome, .linha-ex .item-det { grid-column: 1; }
+    .linha-ex .link-ajuda { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+    .stepper { display: flex; align-items: center; gap: 6px; }
+    .stepper, .btn-lixo { flex-shrink: 0; }
+    .stepper button {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--skeleton); font-size: 16px; font-weight: 600; color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .stepper span { min-width: 48px; text-align: center; font-size: 13px; font-weight: 600; }
+    .btn-lixo { color: var(--muted); width: 44px; height: 44px; margin-left: auto; display: flex; align-items: center; justify-content: center; }
+    .btn-lixo:hover { color: var(--pink); }
+
+    /* Formulário */
+    .form { display: flex; flex-direction: column; gap: 10px; }
+    .form label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px; }
+    .form input {
+      width: 100%;
+      font-size: 16px; /* 16px evita zoom automático no iPhone */
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .form input:focus { outline: 2px solid var(--primary); border-color: var(--primary); }
+    .form input::placeholder { color: var(--text2); opacity: 1; }
+    .form input[aria-invalid="true"] { border-color: #9C3434; }
+    .campo-erro, .form-ajuda { font-size: 12px; line-height: 1.4; margin: 4px 0 0; }
+    .campo-erro { color: #9C3434; }
+    .form-ajuda { color: var(--text2); }
+    .form-linha { display: flex; gap: 8px; }
+    .form-linha > div { flex: 1; min-width: 0; }
+    .btn-primario {
+      background: var(--primary); color: #fff;
+      min-height: 44px;
+      font-size: 14px; font-weight: 600;
+      padding: 12px; border-radius: 12px;
+    }
+    .btn-primario:active { transform: scale(0.98); }
+
+    /* Histórico */
+    .hist-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 0.5px solid var(--border); }
+    .lista li:first-child .hist-item { border-top: none; }
+    .hist-data {
+      width: 48px; padding: 6px 0; border-radius: 10px;
+      flex-shrink: 0;
+      background: #E1F5EE; color: var(--primary);
+      text-align: center; font-size: 12px; font-weight: 600; text-transform: capitalize;
+    }
+    .hist-volume { font-size: 12px; font-weight: 600; color: var(--primary); overflow-wrap: anywhere; }
+    .hist-ano { display: block; font-size: 11px; }
+    .hist-limite { font-size: 12px; line-height: 1.4; color: var(--text2); margin-bottom: 8px; }
+    .link-reset {
+      display: block; margin: 20px auto 0;
+      font-size: 12px; color: var(--text2); text-decoration: underline; min-height: 44px;
+    }
+
+    /* ============ BARRA DE NAVEGAÇÃO ============ */
+    .tabbar {
+      display: flex;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-top: 0.5px solid var(--border);
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+    }
+    .tab {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      font-size: 10px; color: var(--text2);
+      padding: 4px 0;
+    }
+    .tab .ic { width: 20px; height: 20px; color: var(--muted); }
+    .tab.ativa .ic { color: var(--primary); }
+    .tab.ativa { color: var(--primary); font-weight: 600; }
+    .tab-aviso { font-size: 10px; color: var(--text2); }
+    .tab:focus-visible, #titulo-historico:focus { outline: 2px solid var(--primary); outline-offset: -2px; }
+
+    /* ============ AVISO (toast) ============ */
+    .toast {
+      position: absolute; left: 50%; bottom: 84px;
+      transform: translate(-50%, 20px);
+      background: #2C2C2A; color: #fff;
+      font-size: 13px; padding: 10px 16px; border-radius: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      max-width: 85%; text-align: center;
+    }
+    .toast.mostrar { opacity: 1; transform: translate(-50%, 0); }
+
+    /* O problema de armazenamento fica visível até ser resolvido. */
+    .aviso-dados { flex-shrink: 0; max-height: 35%; overflow-y: auto; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
+    .aviso-dados button { color: var(--primary); text-decoration: underline; padding: 10px 0; min-height: 44px; font-size: 13px; }
+    .aviso-dados button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    button:disabled { cursor: default; opacity: .55; }
+    @media (prefers-reduced-motion: reduce) {
+      .barra-preenchida, .toast { transition: none; }
+      .acao:active, .btn-primario:active { transform: none; }
+      .toast { transform: translate(-50%, 0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Ícones (desenhados em SVG, não precisa de internet) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol>
+    <symbol id="i-barbell" viewBox="0 0 24 24"><path d="M2 12h1" /><path d="M6 8h-2a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1h2" /><path d="M6 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1" /><path d="M9 12h6" /><path d="M15 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1v-10a1 1 0 0 0 -1 -1h-1a1 1 0 0 0 -1 1" /><path d="M18 8h2a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-2" /><path d="M22 12h-1" /></symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M4 8h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1" /></symbol>
+    <symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M4 19l16 0" /><path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol>
+    <symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5l0 14" /><path d="M5 12l14 0" /></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10" /></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.294 -2.333 5.588c0 3.704 3.134 6.706 7 6.706c3.866 0 7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol>
+  </svg>
+
+  <div class="phone">
+
+    <aside class="aviso-dados" id="aviso-dados" hidden aria-label="Armazenamento dos treinos">
+      <p id="mensagem-dados" role="status" aria-live="polite"></p>
+      <button data-acao="recarregar-dados">Tentar carregar novamente</button>
+    </aside>
+
+    <aside class="aviso-dados" id="aviso-dia" hidden aria-label="Mudança de dia">
+      <p id="mensagem-dia" role="status" aria-live="polite"></p>
+      <button data-acao="conferir-dia">Conferir treino de hoje</button>
+    </aside>
+
+    <!-- ================= TELA: INÍCIO ================= -->
+    <main class="tela ativa" id="tela-inicio" aria-label="Início">
+      <h1 class="so-leitor">Início</h1>
+      <header class="header">
+        <div class="header-topo">
+          <span class="header-data" id="data-hoje"></span>
+          <button class="btn-sino" data-acao="notificacoes" aria-label="Notificações">
+            <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
+          </button>
+        </div>
+        <div class="header-usuario">
+          <div class="avatar" id="avatar-usuario">LE</div>
+          <div>
+            <div class="saudacao" id="saudacao-usuario">Olá,</div>
+            <div class="nome-usuario" id="nome-usuario">Leonardo</div>
+          </div>
+        </div>
+        <p class="aviso-avaliacao" hidden></p>
+      </header>
+
+      <div class="conteudo">
+        <h2 class="secao-titulo">Resumo do dia</h2>
+        <div class="grade-resumo" id="resumo"></div>
+
+        <h2 class="secao-titulo">Ações rápidas</h2>
+        <div class="acoes">
+          <button class="acao principal" data-acao="registrar">
+            <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>
+            <span id="acao-registro">Registrar treino</span>
+          </button>
+          <button class="acao" data-acao="novo-exercicio">
+            <svg class="ic" aria-hidden="true" focusable="false" style="color: var(--orange)"><use href="#i-barbell"/></svg>
+            Novo exercício
+          </button>
+          <button class="acao" data-acao="historico">
+            <svg class="ic" aria-hidden="true" focusable="false" style="color: var(--blue)"><use href="#i-chart-line"/></svg>
+            Histórico
+          </button>
+        </div>
+
+        <h2 class="secao-titulo">Treino de hoje</h2>
+        <div class="card" id="card-treino" tabindex="-1" role="region" aria-labelledby="home-nome-treino">
+          <div class="card-topo">
+            <div>
+              <div class="card-titulo" id="home-nome-treino"></div>
+              <div class="card-sub" id="home-progresso-texto"></div>
+            </div>
+            <span class="selo" id="home-selo"></span>
+          </div>
+          <div class="barra" id="progresso-treino" role="progressbar" aria-label="Exercícios marcados" aria-describedby="home-progresso-texto" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Nenhum exercício marcado"><div class="barra-preenchida" id="home-barra"></div></div>
+          <button class="link-ajuda" data-acao="ajuda">Entender meu treino</button>
+          <p class="nota-exemplo">O treino inicial é um exemplo de demonstração, sem prescrição individual.</p>
+          <p class="registro-info" id="home-registro" hidden></p>
+          <button class="btn-cancelar" data-acao="cancelar-alteracoes" hidden>Cancelar alterações</button>
+          <ul class="lista" id="home-lista"></ul>
+          <p class="dica" id="home-dica"></p>
+        </div>
+
+        <h2 class="secao-titulo">Progresso semanal</h2>
+        <div class="card">
+          <div class="card-topo" style="margin-bottom: 0">
+            <div class="card-titulo">Treinos da semana</div>
+            <span class="selo ok" id="semana-selo"></span>
+          </div>
+          <div class="semana" id="semana" role="list" aria-label="Registros de segunda a domingo"></div>
+          <p class="dica">✓ Treino registrado · — Sem registro</p>
+          <div class="estatisticas">
+            <div><div class="est-rotulo">Treinos feitos</div><div class="est-valor" id="est-feitos"></div></div>
+            <div><div class="est-rotulo">Meta semanal</div><div class="est-valor" id="est-meta"></div></div>
+            <div><div class="est-rotulo">Faltam</div><div class="est-valor" id="est-faltam" style="color: var(--primary)"></div></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================= TELA: TREINOS ================= -->
+    <main class="tela" id="tela-treinos" aria-label="Treinos">
+      <header class="header">
+        <h1 class="titulo-tela">Treinos</h1>
+        <p class="subtitulo-tela" id="treinos-subtitulo"></p>
+        <p class="aviso-avaliacao" hidden></p>
+      </header>
+
+      <div class="conteudo">
+        <h2 class="secao-titulo">Exercícios do treino</h2>
+        <div class="card">
+          <button class="link-ajuda" data-acao="ajuda">Entender séries, repetições e carga</button>
+          <p class="nota-exemplo">O treino inicial é um exemplo de demonstração.</p>
+          <div class="registro-info" id="treinos-pendencia" hidden>
+            <p id="treinos-pendencia-texto"></p>
+            <button data-acao="revisar-registro">Revisar registro no Início</button>
+          </div>
+          <ul class="lista" id="treinos-lista"></ul>
+        </div>
+
+        <h2 class="secao-titulo">Adicionar exercício</h2>
+        <form class="card form" id="form-exercicio" autocomplete="off" novalidate>
+          <div>
+            <label for="f-nome">Nome do exercício</label>
+            <input id="f-nome" type="text" placeholder="Ex.: Supino reto" required aria-describedby="ajuda-nome erro-nome">
+            <p class="form-ajuda" id="ajuda-nome">Até 40 caracteres.</p>
+            <p class="campo-erro" id="erro-nome" hidden></p>
+          </div>
+          <div class="form-linha">
+            <div>
+              <label for="f-series">Séries</label>
+              <input id="f-series" type="text" inputmode="numeric" required value="3" aria-describedby="erro-series">
+              <p class="campo-erro" id="erro-series" hidden></p>
+            </div>
+            <div>
+              <label for="f-reps">Repetições</label>
+              <input id="f-reps" type="text" inputmode="numeric" required value="10" aria-describedby="erro-reps">
+              <p class="campo-erro" id="erro-reps" hidden></p>
+            </div>
+            <div>
+              <label for="f-carga">Carga (kg)</label>
+              <input id="f-carga" type="text" inputmode="decimal" required value="0" aria-describedby="ajuda-carga erro-carga">
+              <p class="campo-erro" id="erro-carga" hidden></p>
+            </div>
+          </div>
+          <p class="form-ajuda" id="ajuda-carga">Carga: use vírgula ou ponto e até uma casa decimal (ex.: 2,5). Zero indica peso corporal.</p>
+          <p class="campo-erro" id="erro-formulario" role="alert" hidden></p>
+          <button class="btn-primario" type="submit">Adicionar ao treino</button>
+        </form>
+
+        <h2 class="secao-titulo" id="titulo-historico" tabindex="-1" aria-describedby="historico-limite">Histórico de treinos</h2>
+        <div class="card">
+          <p class="hist-limite" id="historico-limite">Até 6 registros, do mais recente ao mais antigo.</p>
+          <ul class="lista" id="historico-lista"></ul>
+        </div>
+
+        <button class="link-reset" data-acao="resetar">Restaurar dados de exemplo</button>
+      </div>
+    </main>
+
+    <!-- ================= BARRA DE NAVEGAÇÃO ================= -->
+    <nav class="tabbar" aria-label="Navegação principal">
+      <button class="tab ativa" data-acao="aba" data-aba="inicio" aria-controls="tela-inicio" aria-current="page">
+        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-home"/></svg>Início
+      </button>
+      <button class="tab" data-acao="aba" data-aba="treinos" aria-controls="tela-treinos">
+        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-barbell"/></svg>Treinos
+      </button>
+      <button class="tab" data-acao="embreve" aria-disabled="true" aria-label="Dieta, indisponível nesta versão">
+        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-bowl"/></svg>Dieta
+        <span class="tab-aviso">Em breve</span>
+      </button>
+      <button class="tab" data-acao="embreve" aria-disabled="true" aria-label="Evolução, indisponível nesta versão">
+        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg>Evolução
+        <span class="tab-aviso">Em breve</span>
+      </button>
+      <button class="tab" data-acao="embreve" aria-disabled="true" aria-label="Perfil, indisponível nesta versão">
+        <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg>Perfil
+        <span class="tab-aviso">Em breve</span>
+      </button>
+    </nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <p class="so-leitor" id="status-treino" role="status" aria-live="polite" aria-atomic="true"></p>
+  </div>
+
+  <dialog class="ajuda-dialogo" id="ajuda-treino" aria-labelledby="ajuda-titulo">
+    <div class="ajuda-topo">
+      <h2 id="ajuda-titulo">Entenda seu treino</h2>
+      <button class="ajuda-fechar" data-acao="fechar-ajuda" autofocus>Fechar ajuda</button>
+    </div>
+    <div class="ajuda-corpo">
+      <p id="ajuda-contexto" hidden></p>
+      <p>Consultar esta ajuda não marca exercícios nem registra o treino.</p>
+      <dl>
+        <dt>Repetições</dt>
+        <dd>Uma repetição é um movimento completo do exercício. O número de repetições indica quantas vezes ele se repete em cada série.</dd>
+        <dt>Séries</dt>
+        <dd>Uma série é um grupo de repetições. Por exemplo, 3 × 10 significa 3 séries de 10 repetições. Esse exemplo explica a leitura dos números, sem indicar quanto você deve fazer.</dd>
+        <dt>Carga</dt>
+        <dd>No TrainUp, é o valor em kg informado para o exercício. Registre o valor definido no seu treino; o aplicativo não escolhe nem recomenda uma carga para você.</dd>
+        <dt>Peso corporal</dt>
+        <dd>O próprio corpo pode oferecer resistência ao exercício. Aqui, carga 0 aparece como “Peso corporal” e não acrescenta kg ao volume. Isso não significa ausência de esforço.</dd>
+        <dt id="ajuda-volume">Volume no TrainUp</dt>
+        <dd>É a soma de séries × repetições × carga dos exercícios marcados. Exemplo de cálculo: 3 × 10 × 20 kg = 600 kg. É um indicador dos dados registrados, não uma medida de calorias, qualidade do treino ou esforço total.</dd>
+        <dt>Marcar e registrar</dt>
+        <dd>Marcar indica o que você fez na lista. “Registrar treino” salva o resumo do dia. Se mudar algo depois, use “Atualizar registro” ou “Cancelar alterações”.</dd>
+      </dl>
+      <p>O treino inicial, o histórico pré-carregado e a meta semanal são exemplos de demonstração.</p>
+      <p>Conteúdo preliminar, ainda sem revisão profissional. Para aprender a execução de um movimento, peça orientação ao profissional que acompanha seu treino.</p>
+      <details>
+        <summary>Fontes e limites desta ajuda</summary>
+        <p>Definições adaptadas do NHS, “How to improve your strength and flexibility” (revisão de 21/07/2026), e do Better Health Channel, “Resistance training – health benefits”. Consultadas em 25/10/2026.</p>
+        <p>Os cálculos e as ações descritos seguem as regras do TrainUp. Os textos desta ajuda funcionam sem internet. Os links abaixo abrem as fontes externas e precisam de conexão.</p>
+        <p><a href="https://www.nhs.uk/live-well/exercise/how-to-improve-strength-flexibility/" target="_blank" rel="noopener noreferrer">Fonte: NHS (em inglês)</a></p>
+        <p><a href="https://www.betterhealth.vic.gov.au/health/HealthyLiving/resistance-training-health-benefits" target="_blank" rel="noopener noreferrer">Fonte: Better Health Channel (em inglês)</a></p>
+      </details>
+    </div>
+  </dialog>
+
+  <script>
+    /* =====================================================
+       TrainUp — homepage com foco em treinos
+       Tudo é salvo no próprio navegador (localStorage).
+       Não precisa de servidor nem de internet.
+       ===================================================== */
+
+    // A avaliação tem dados separados; abrir/recarregar nunca reinicia uma sessão.
+    var CENARIO_AVALIACAO = new URLSearchParams(location.search).get('avaliacao');
+    if (CENARIO_AVALIACAO !== 'com-historico' && CENARIO_AVALIACAO !== 'sem-historico') { CENARIO_AVALIACAO = ''; }
+    var CHAVE = CENARIO_AVALIACAO ? 'trainup_avaliacao_' + CENARIO_AVALIACAO + '_v2' : 'trainup_treinos_v2';
+    var CHAVE_ANTIGA = CENARIO_AVALIACAO ? 'trainup_avaliacao_' + CENARIO_AVALIACAO + '_v1' : 'trainup_treinos_v1'; // preservada depois da migração
+    var META_SEMANAL = 5;                // meta: 5 treinos por semana
+    var estado = null;                   // aqui ficam todos os dados do app
+    var ultimoEstado = null;
+    var textoV2 = null;
+    var textoAntigo = null;
+    var leituraConcluida = false;
+    var bloquearAlteracoes = false;
+    var precisaGravar = false;
+    var mensagemDados = '';
+    var origemAjuda = null;
+    var exercicioAjuda = null;
+
+    /* ---------- Funções de apoio ---------- */
+
+    // Troca caracteres especiais para ninguém quebrar a tela digitando < ou >
+    function esc(texto) {
+      return String(texto).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    // Desenha um ícone do conjunto lá de cima
+    function icone(nome) {
+      return '<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-' + nome + '"/></svg>';
+    }
+
+    // Formata número no padrão brasileiro (1.840 / 2,5)
+    function formatar(n) {
+      return n.toLocaleString('pt-BR');
+    }
+
+    // Transforma uma data em texto "2026-10-03" (fácil de guardar e comparar)
+    function dataISO(d) {
+      var ano = d.getFullYear();
+      var mes = String(d.getMonth() + 1).padStart(2, '0');
+      var dia = String(d.getDate()).padStart(2, '0');
+      return ano + '-' + mes + '-' + dia;
+    }
+
+    function hojeISO() {
+      return dataISO(new Date());
+    }
+
+    // Segunda = 0, terça = 1 ... domingo = 6
+    function diaDaSemana(d) {
+      return (d.getDay() + 6) % 7;
+    }
+
+    /* ---------- Salvar e carregar ---------- */
+
+    function copiar(dados) {
+      return JSON.parse(JSON.stringify(dados));
+    }
+
+    function objetoValido(valor) {
+      return valor !== null && typeof valor === 'object' && !Array.isArray(valor);
+    }
+
+    function numeroValido(valor, minimo, maximo, inteiro) {
+      return typeof valor === 'number' && isFinite(valor) && valor >= minimo && valor <= maximo && (!inteiro || Math.floor(valor) === valor);
+    }
+
+    function nomeValido(valor) {
+      return typeof valor === 'string' && valor.trim().length > 0 && valor.length <= 200;
+    }
+
+    function dataValida(valor) {
+      if (typeof valor !== 'string' || !/^[1-9][0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(valor)) { return false; }
+      var data = new Date(valor + 'T12:00:00');
+      return !isNaN(data.getTime()) && dataISO(data) === valor;
+    }
+
+    // Limites técnicos amplos, sem significado de recomendação de treino.
+    function exercicioValido(ex) {
+      return objetoValido(ex) && numeroValido(ex.id, 1, 2147483646, true) && nomeValido(ex.nome) &&
+        numeroValido(ex.series, 1, 1000, true) && numeroValido(ex.reps, 1, 1000, true) &&
+        numeroValido(ex.carga, 0, 1000000, false) && typeof ex.feito === 'boolean';
+    }
+
+    function listaValida(lista) {
+      if (!Array.isArray(lista) || lista.length > 1000) { return false; }
+      var ids = [];
+      return lista.every(function (ex) {
+        if (!exercicioValido(ex) || ids.indexOf(ex.id) !== -1) { return false; }
+        ids.push(ex.id);
+        return true;
+      });
+    }
+
+    function registroValido(registro) {
+      return objetoValido(registro) && dataValida(registro.data) && nomeValido(registro.treino) &&
+        numeroValido(registro.total, 1, 1000, true) && numeroValido(registro.feitos, 1, registro.total, true) &&
+        numeroValido(registro.volume, 0, 1000000000000000, false);
+    }
+
+    function referenciaValida(dados) {
+      var ref = dados.referenciaRegistro;
+      if (ref === null) { return true; }
+      if (!objetoValido(ref) || ref.data !== dados.diaMarcacao || !nomeValido(ref.nomeTreino) || !listaValida(ref.exercicios)) { return false; }
+      var registro = dados.historico.filter(function (h) { return h.data === ref.data; })[0];
+      var feitos = 0;
+      var volume = 0;
+      ref.exercicios.forEach(function (ex) {
+        if (ex.feito) { feitos++; volume += ex.series * ex.reps * ex.carga; }
+      });
+      return !!registro && registro.treino === ref.nomeTreino && registro.total === ref.exercicios.length &&
+        registro.feitos === feitos && Math.abs(registro.volume - volume) <= Math.max(1, volume) * 0.000000000001;
+    }
+
+    function estadoValido(dados, antigo) {
+      if (!objetoValido(dados) || !nomeValido(dados.nomeTreino) || !dataValida(dados.diaMarcacao) ||
+          !numeroValido(dados.proximoId, 1, 2147483647, true) || !listaValida(dados.exercicios) ||
+          !Array.isArray(dados.historico) || dados.historico.length > 50000) { return false; }
+      var datas = {};
+      var historicoValido = dados.historico.every(function (h) {
+        if (!registroValido(h) || datas[h.data]) { return false; }
+        datas[h.data] = true;
+        return true;
+      });
+      if (!historicoValido || (!antigo && !referenciaValida(dados))) { return false; }
+      var lista = dados.exercicios;
+      if (!antigo && dados.referenciaRegistro) { lista = lista.concat(dados.referenciaRegistro.exercicios); }
+      return lista.every(function (ex) { return ex.id < dados.proximoId; });
+    }
+
+    // Recupera só uma consulta segura; não regrava nem escolhe entre IDs/datas duplicados.
+    function dadosParaConsulta(dados) {
+      dados = objetoValido(dados) ? dados : {};
+      var consulta = { nomeTreino: nomeValido(dados.nomeTreino) ? dados.nomeTreino : 'Dados para consulta',
+        diaMarcacao: dataValida(dados.diaMarcacao) ? dados.diaMarcacao : hojeISO(),
+        proximoId: 1, exercicios: [], historico: [], referenciaRegistro: null };
+      var lista = Array.isArray(dados.exercicios) ? dados.exercicios : [];
+      var ids = {};
+      lista.forEach(function (ex) { if (exercicioValido(ex)) { ids[ex.id] = (ids[ex.id] || 0) + 1; } });
+      consulta.exercicios = lista.filter(function (ex) { return exercicioValido(ex) && ids[ex.id] === 1; }).slice(0, 1000);
+      consulta.exercicios.forEach(function (ex) { consulta.proximoId = Math.max(consulta.proximoId, ex.id + 1); });
+      var historico = Array.isArray(dados.historico) ? dados.historico : [];
+      var datas = {};
+      historico.forEach(function (h) { if (registroValido(h)) { datas[h.data] = (datas[h.data] || 0) + 1; } });
+      consulta.historico = historico.filter(function (h) { return registroValido(h) && datas[h.data] === 1; }).slice(0, 50000);
+      return copiar(consulta);
+    }
+
+    function avisarDados(mensagem) {
+      mensagemDados = mensagem;
+      document.getElementById('mensagem-dados').textContent = mensagem;
+      document.getElementById('aviso-dados').hidden = !mensagem;
+    }
+
+    function carregar() {
+      var dados = null;
+      try {
+        textoV2 = localStorage.getItem(CHAVE);
+        textoAntigo = textoV2 === null ? localStorage.getItem(CHAVE_ANTIGA) : null;
+        leituraConcluida = true;
+      } catch (e) {
+        bloquearAlteracoes = true;
+        avisarDados('Não foi possível acessar os treinos salvos. As alterações estão bloqueadas. Libere o armazenamento do navegador e tente carregar novamente.');
+        return dadosParaConsulta(null);
+      }
+      var texto = textoV2 === null ? textoAntigo : textoV2;
+      if (texto === null) { precisaGravar = true; return estadoInicial(); }
+      try { dados = JSON.parse(texto); } catch (e) { /* O texto original continua guardado. */ }
+      if (!estadoValido(dados, textoV2 === null)) {
+        bloquearAlteracoes = true;
+        avisarDados('Há dados que não puderam ser lidos. Os originais foram mantidos. Esta é uma consulta parcial, sem permitir alterações. Tente carregar novamente após corrigir os dados; restaurar os exemplos em Treinos substitui os dados atuais.');
+        return dadosParaConsulta(dados);
+      }
+      if (textoV2 === null) {
+        // O resumo antigo não permite reconstruir os detalhes do registro.
+        dados.referenciaRegistro = null;
+        precisaGravar = true;
+      }
+      return dados;
+    }
+
+    function podeAlterar() {
+      if (!bloquearAlteracoes) { return conferirDia(); }
+      toast('As alterações estão bloqueadas. Confira o aviso de armazenamento.');
+      return false;
+    }
+
+    function salvar(restauracao) {
+      var mensagem = '';
+      if (!leituraConcluida || (bloquearAlteracoes && !restauracao)) {
+        mensagem = 'Não foi possível salvar. Confira o aviso de armazenamento e tente carregar novamente.';
+      } else if (!estadoValido(estado, false)) {
+        mensagem = 'A alteração contém dados fora dos limites aceitos e não foi salva. Confira os campos e tente novamente.';
+      } else {
+        try {
+          // Uma aba desatualizada não pode sobrescrever dados que acabou de desconhecer.
+          if (localStorage.getItem(CHAVE) !== textoV2 ||
+              (textoV2 === null && localStorage.getItem(CHAVE_ANTIGA) !== textoAntigo)) {
+            bloquearAlteracoes = true;
+            leituraConcluida = false;
+            mensagem = 'Os dados salvos mudaram fora desta tela. A alteração não foi salva. Tente carregar novamente antes de continuar.';
+          } else {
+            var texto = JSON.stringify(estado);
+            localStorage.setItem(CHAVE, texto);
+            textoV2 = texto;
+            ultimoEstado = copiar(estado);
+            bloquearAlteracoes = false;
+            avisarDados('');
+            return true;
+          }
+        } catch (e) {
+          mensagem = 'Não foi possível salvar. A alteração foi desfeita. Verifique o espaço e a permissão de armazenamento do navegador e tente novamente.';
+        }
+      }
+      estado = copiar(ultimoEstado);
+      avisarDados(mensagem);
+      toast('Alteração não salva');
+      return false;
+    }
+
+    function iniciarDados() {
+      leituraConcluida = false;
+      bloquearAlteracoes = false;
+      precisaGravar = false;
+      avisarDados('');
+      estado = carregar();
+      ultimoEstado = copiar(estado);
+      if (!bloquearAlteracoes) {
+        var aviso = '';
+        if (estado.diaMarcacao !== hojeISO()) {
+          aviso = prepararDia();
+          precisaGravar = true;
+        }
+        if (precisaGravar && !salvar()) {
+          bloquearAlteracoes = true;
+          avisarDados('Não foi possível preparar o armazenamento. Os dados anteriores foram mantidos e as alterações estão bloqueadas. Verifique espaço e permissões e tente carregar novamente.');
+        } else if (aviso) {
+          avisarDia(aviso);
+        }
+      }
+      render();
+    }
+
+    function avisarDia(mensagem) {
+      document.getElementById('mensagem-dia').textContent = mensagem;
+      document.getElementById('aviso-dia').hidden = !mensagem;
+    }
+
+    // Encerra só as marcações; a lista atual e o histórico continuam guardados.
+    function prepararDia() {
+      var registro = registroDaData(estado.diaMarcacao);
+      var pendente = registro ? temAlteracoes() : quantosFeitos() > 0;
+      var aviso = 'O dia mudou. As marcações foram reiniciadas. Confira o treino de hoje antes de continuar.';
+      if (pendente) {
+        aviso += ' As marcações ou alterações pendentes do dia anterior não entraram no histórico. A lista e as cargas foram mantidas.';
+      }
+      estado.exercicios.forEach(function (ex) { ex.feito = false; });
+      estado.diaMarcacao = hojeISO();
+      estado.referenciaRegistro = null;
+      return aviso;
+    }
+
+    function conferirDia() {
+      if (!estado || bloquearAlteracoes) { return false; }
+      if (estado.diaMarcacao === hojeISO()) { return true; }
+      var aviso = prepararDia();
+      if (salvar()) {
+        avisarDia(aviso);
+      } else {
+        bloquearAlteracoes = true;
+        avisarDados('Não foi possível iniciar o novo dia. Os dados anteriores foram mantidos e as alterações estão bloqueadas. Tente carregar novamente.');
+      }
+      render();
+      // A ação começou com a tela do dia anterior e precisa ser repetida.
+      return false;
+    }
+
+    /* ---------- Dados de exemplo (mock) ---------- */
+
+    function estadoInicial() {
+      var hoje = new Date();
+      var hoje0 = diaDaSemana(hoje);
+      var historico = [];
+      var nomes = ['Peito + Tríceps', 'Costas + Bíceps', 'Pernas', 'Ombros + Abdômen'];
+
+      // Cria um treino registrado X dias antes/depois de hoje
+      function adicionar(deslocamento, i) {
+        var d = new Date(hoje);
+        d.setDate(hoje.getDate() + deslocamento);
+        historico.push({
+          data: dataISO(d),
+          treino: nomes[i % nomes.length],
+          feitos: 6,
+          total: 6,
+          volume: 3800 + i * 240
+        });
+      }
+
+      // Esta semana: segunda, terça, quinta e sexta (só os dias que já passaram)
+      [0, 1, 3, 4].forEach(function (dia, i) {
+        if (dia < hoje0) { adicionar(dia - hoje0, i); }
+      });
+      // Semana passada e retrasada
+      [0, 2, 3, 4].forEach(function (dia, i) { adicionar(dia - hoje0 - 7, i + 1); });
+      [0, 2, 4].forEach(function (dia, i) { adicionar(dia - hoje0 - 14, i + 2); });
+
+      // Cenários TU-11: quantidade fixa; datas relativas são registradas na ficha.
+      if (CENARIO_AVALIACAO) {
+        historico = [];
+        if (CENARIO_AVALIACAO === 'com-historico') {
+          [1, 3, 7].forEach(function (dias, i) { adicionar(-dias, i); });
+        }
+      }
+
+      return {
+        nomeTreino: 'Peito + Tríceps',
+        diaMarcacao: hojeISO(),
+        proximoId: 7,
+        exercicios: [
+          { id: 1, nome: 'Supino reto',         series: 4, reps: 10, carga: 40, feito: false },
+          { id: 2, nome: 'Supino inclinado',    series: 3, reps: 10, carga: 30, feito: false },
+          { id: 3, nome: 'Crucifixo',           series: 3, reps: 12, carga: 14, feito: false },
+          { id: 4, nome: 'Tríceps na corda',    series: 4, reps: 12, carga: 25, feito: false },
+          { id: 5, nome: 'Tríceps testa',       series: 3, reps: 10, carga: 20, feito: false },
+          { id: 6, nome: 'Mergulho no banco',   series: 3, reps: 12, carga: 0,  feito: false }
+        ],
+        historico: historico,
+        referenciaRegistro: null
+      };
+    }
+
+    /* ---------- Cálculos ---------- */
+
+    function detalhe(ex) {
+      var carga = ex.carga > 0 ? formatar(ex.carga) + ' kg' : 'Peso corporal';
+      return ex.series + ' × ' + ex.reps + ' · ' + carga;
+    }
+
+    // Volume = séries × repetições × carga (só dos exercícios marcados como feitos)
+    function volumeFeito() {
+      var total = 0;
+      estado.exercicios.forEach(function (ex) {
+        if (ex.feito) { total += ex.series * ex.reps * ex.carga; }
+      });
+      return total;
+    }
+
+    function quantosFeitos() {
+      return estado.exercicios.filter(function (ex) { return ex.feito; }).length;
+    }
+
+    function registroDaData(data) {
+      return estado.historico.filter(function (h) { return h.data === data; })[0];
+    }
+
+    function jaRegistradoHoje() {
+      return !!registroDaData(hojeISO());
+    }
+
+    function temAlteracoes() {
+      var ref = estado.referenciaRegistro;
+      if (!ref) { return false; }
+      if (estado.nomeTreino !== ref.nomeTreino || estado.exercicios.length !== ref.exercicios.length) { return true; }
+      return estado.exercicios.some(function (ex, i) {
+        var salvo = ref.exercicios[i];
+        return ex.id !== salvo.id || ex.nome !== salvo.nome || ex.series !== salvo.series ||
+          ex.reps !== salvo.reps || ex.carga !== salvo.carga || ex.feito !== salvo.feito;
+      });
+    }
+
+    function estadoDoTreino() {
+      if (jaRegistradoHoje()) { return temAlteracoes() ? 'pendente' : 'registrado'; }
+      var feitos = quantosFeitos();
+      if (feitos === 0) { return 'nao-iniciado'; }
+      return feitos === estado.exercicios.length ? 'todos-marcados' : 'em-andamento';
+    }
+
+    function datasDaSemana(hoje) {
+      var datas = [];
+      var segunda = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate(), 12);
+      segunda.setDate(segunda.getDate() - diaDaSemana(hoje));
+      for (var i = 0; i < 7; i++) {
+        var dia = new Date(segunda);
+        dia.setDate(segunda.getDate() + i);
+        datas.push(dataISO(dia));
+      }
+      return datas;
+    }
+
+    function treinosDoMes() {
+      var prefixo = hojeISO().slice(0, 7); // "2026-10"
+      return estado.historico.filter(function (h) { return h.data.indexOf(prefixo) === 0; }).length;
+    }
+
+    /* ---------- Desenhar a tela ---------- */
+
+    function renderCabecalho() {
+      var texto = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'short' });
+      document.getElementById('data-hoje').textContent = texto.charAt(0).toUpperCase() + texto.slice(1);
+      if (CENARIO_AVALIACAO) {
+        document.getElementById('avatar-usuario').textContent = 'TU';
+        document.getElementById('saudacao-usuario').textContent = 'Olá!';
+        document.getElementById('nome-usuario').textContent = 'Boas-vindas';
+        document.querySelectorAll('.aviso-avaliacao').forEach(function (aviso) {
+          aviso.hidden = false;
+          aviso.textContent = 'Avaliação · cenário inicial ' + (CENARIO_AVALIACAO === 'com-historico' ? 'com histórico' : 'sem histórico') + '. Dados fictícios, inclusive os registros feitos nas tarefas.';
+        });
+        document.querySelector('[data-acao="resetar"]').textContent = 'Restaurar cenário de avaliação';
+      }
+    }
+
+    function renderResumo() {
+      var total = estado.exercicios.length;
+      var feitos = quantosFeitos();
+      var percentual = total > 0 ? Math.round((feitos / total) * 100) : 0;
+      var mes = new Date().toLocaleDateString('pt-BR', { month: 'long' });
+
+      var cards = [
+        { icone: 'barbell', cor: 'var(--primary)', rotulo: 'Treino',     valor: esc(estado.nomeTreino), sub: total + ' exercícios' },
+        { icone: 'check',    cor: 'var(--orange)',  rotulo: 'Concluídos', valor: feitos + ' / ' + total, sub: percentual + '% do treino' },
+        { icone: 'trending-up',    cor: 'var(--blue)',    rotulo: 'Volume',     valor: formatar(volumeFeito()) + ' kg', sub: 'carga total hoje' },
+        { icone: 'flame',    cor: 'var(--pink)',    rotulo: 'No mês',     valor: treinosDoMes() + ' treinos', sub: 'em ' + mes }
+      ];
+
+      document.getElementById('resumo').innerHTML = cards.map(function (c) {
+        return '<div class="card">' +
+          '<div class="resumo-topo" style="color:' + c.cor + '">' + icone(c.icone) + '<span>' + c.rotulo + '</span></div>' +
+          '<div class="resumo-valor">' + c.valor + '</div>' +
+          '<div class="resumo-sub">' + c.sub + '</div>' +
+          (c.rotulo === 'Volume' ? '<button class="link-ajuda" data-acao="ajuda" data-tema="volume">Entender volume</button>' : '') +
+        '</div>';
+      }).join('');
+    }
+
+    function renderTreinoHoje() {
+      var total = estado.exercicios.length;
+      var feitos = quantosFeitos();
+      var registro = registroDaData(hojeISO());
+      var situacao = estadoDoTreino();
+      var legado = !!registro && !estado.referenciaRegistro;
+      var pendente = situacao === 'pendente';
+
+      document.getElementById('home-nome-treino').textContent = estado.nomeTreino;
+      document.getElementById('home-progresso-texto').textContent = feitos + ' de ' + total + ' exercícios feitos';
+      document.getElementById('home-barra').style.width = (total > 0 ? (feitos / total) * 100 : 0) + '%';
+      var progresso = document.getElementById('progresso-treino');
+      progresso.setAttribute('aria-valuenow', total ? Math.round(feitos / total * 100) : 0);
+      progresso.setAttribute('aria-valuetext', feitos + ' de ' + total + ' exercícios marcados');
+
+      var selo = document.getElementById('home-selo');
+      var nomes = { 'nao-iniciado': 'Não iniciado', 'em-andamento': 'Em andamento',
+        'todos-marcados': 'Todos marcados', 'registrado': 'Registrado ✓', 'pendente': 'Alterações pendentes' };
+      selo.textContent = nomes[situacao];
+      selo.className = situacao === 'registrado' ? 'selo ok' : 'selo';
+      document.getElementById('acao-registro').textContent = pendente || legado ? 'Atualizar registro' : 'Registrar treino';
+
+      var resumo = '';
+      if (registro) {
+        resumo = (registro.feitos < registro.total ? 'Registro parcial: ' : 'Registro completo: ') + registro.feitos + '/' + registro.total + '.';
+        if (pendente || legado) {
+          resumo = 'Último registro: ' + registro.feitos + '/' + registro.total + ' exercícios · ' + formatar(registro.volume) + ' kg (' + (registro.feitos < registro.total ? 'parcial' : 'completo') + ').';
+        }
+        if (legado) { resumo += ' Registro anterior sem detalhes para comparação. Não é possível restaurar essa lista antiga.'; }
+      }
+      var info = document.getElementById('home-registro');
+      info.hidden = !resumo;
+      info.textContent = resumo;
+      document.querySelector('[data-acao="cancelar-alteracoes"]').hidden = !pendente;
+      document.getElementById('treinos-pendencia').hidden = !(pendente || legado);
+      document.getElementById('treinos-pendencia-texto').textContent =
+        (pendente ? 'Alterações pendentes. Estas alterações ainda não atualizaram o registro de hoje. ' : '') + resumo;
+
+      var lista = document.getElementById('home-lista');
+      if (total === 0) {
+        lista.innerHTML = '<li class="vazio">Nenhum exercício ainda. Toque em "Novo exercício".</li>';
+      } else {
+        lista.innerHTML = estado.exercicios.map(function (ex) {
+          return '<li class="linha-home"><button class="item ' + (ex.feito ? 'feito' : '') + '" data-acao="marcar" data-id="' + ex.id + '" aria-pressed="' + ex.feito + '">' +
+            '<span class="marca">' + icone('check') + '</span>' +
+            '<span class="item-info"><span class="item-nome" style="display:block">' + esc(ex.nome) + '</span>' +
+            '<span class="item-det" style="display:block">' + detalhe(ex) + '</span></span>' +
+          '</button><button class="ajuda-ex" data-acao="ajuda" data-id="' + ex.id + '" aria-label="Informações de ' + esc(ex.nome) + '">Info</button></li>';
+        }).join('');
+      }
+
+      var dicas = {
+        'nao-iniciado': total ? 'Toque nos exercícios para marcar e depois em "Registrar treino".' : 'Adicione um exercício para começar. Use "Novo exercício" nas ações rápidas.',
+        'em-andamento': 'Você pode registrar os exercícios feitos, mesmo sem terminar todos.',
+        'todos-marcados': 'Falta registrar o treino de hoje.',
+        'registrado': legado ? (feitos ? 'Confira as marcações atuais antes de substituir o registro anterior.' : 'Marque ao menos um exercício para atualizar o registro anterior.') : 'Treino de hoje registrado. Bom descanso!',
+        'pendente': feitos ? 'Estas alterações ainda não atualizaram o registro de hoje. Use "Atualizar registro" ou cancele as alterações.' : 'Marque ao menos um exercício para atualizar ou cancele as alterações.'
+      };
+      document.getElementById('home-dica').textContent = dicas[situacao];
+      if (bloquearAlteracoes) {
+        selo.textContent = 'Consulta';
+        selo.className = 'selo';
+        document.getElementById('home-dica').textContent = 'Alterações bloqueadas. Confira o aviso de armazenamento. Dia das marcações: ' + estado.diaMarcacao + '.';
+      }
+      var status = document.getElementById('status-treino');
+      var mensagem = selo.textContent + '. ' + feitos + ' de ' + total + ' exercícios marcados. ' + resumo;
+      // Só anuncia quando a situação muda, sem repetir a cada ajuste da tela.
+      if (status.textContent !== mensagem) { status.textContent = mensagem; }
+    }
+
+    function renderSemana() {
+      var hoje = new Date();
+      var hoje0 = diaDaSemana(hoje);
+      var datas = datasDaSemana(hoje);
+      var datasFeitas = estado.historico.map(function (h) { return h.data; });
+      var letras = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+      var nomes = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'];
+      var feitosNaSemana = 0;
+      var html = '';
+
+      for (var i = 0; i < 7; i++) {
+        var feito = datasFeitas.indexOf(datas[i]) !== -1;
+        var classe = 'dia';
+        if (feito) { classe += ' feito'; feitosNaSemana++; }
+        if (i === hoje0) { classe += ' hoje'; }
+        var descricao = nomes[i] + ', ' + datas[i].split('-').reverse().join('/') + (i === hoje0 ? ', hoje' : '') + ': ' + (feito ? 'treino registrado' : 'sem registro');
+        html += '<div class="' + classe + '" role="listitem"><span class="so-leitor">' + descricao + '</span><div class="dia-barra" aria-hidden="true">' + (feito ? '✓' : '—') + '</div><div class="dia-letra" aria-hidden="true">' + letras[i] + '</div></div>';
+      }
+
+      document.getElementById('semana').innerHTML = html;
+      document.getElementById('semana-selo').textContent = feitosNaSemana + ' / ' + META_SEMANAL;
+      document.getElementById('est-feitos').textContent = feitosNaSemana;
+      document.getElementById('est-meta').textContent = META_SEMANAL + ' treinos';
+      document.getElementById('est-faltam').textContent = Math.max(0, META_SEMANAL - feitosNaSemana) + ' treinos';
+    }
+
+    function renderListaTreinos() {
+      var series = estado.exercicios.reduce(function (soma, ex) { return soma + ex.series; }, 0);
+      document.getElementById('treinos-subtitulo').textContent =
+        estado.nomeTreino + ' · ' + estado.exercicios.length + ' exercícios · ' + series + ' séries';
+
+      var lista = document.getElementById('treinos-lista');
+      if (estado.exercicios.length === 0) {
+        lista.innerHTML = '<li class="vazio">Nenhum exercício cadastrado. Adicione o primeiro abaixo.</li>';
+        return;
+      }
+      lista.innerHTML = estado.exercicios.map(function (ex) {
+        return '<li class="linha-ex">' +
+          '<div class="item-info"><div class="item-nome">' + esc(ex.nome) + '</div>' +
+          '<div class="item-det">' + ex.series + ' × ' + ex.reps + '</div>' +
+          '<button class="link-ajuda" data-acao="ajuda" data-id="' + ex.id + '" aria-label="Informações de ' + esc(ex.nome) + '">Informações</button></div>' +
+          '<div class="stepper">' +
+            '<button data-acao="menos" data-id="' + ex.id + '" aria-label="Diminuir carga de ' + esc(ex.nome) + '" aria-describedby="carga-' + ex.id + '">−</button>' +
+            '<span id="carga-' + ex.id + '">' + formatar(ex.carga) + ' kg</span>' +
+            '<button data-acao="mais" data-id="' + ex.id + '" aria-label="Aumentar carga de ' + esc(ex.nome) + '" aria-describedby="carga-' + ex.id + '">+</button>' +
+          '</div>' +
+          '<button class="btn-lixo" data-acao="remover" data-id="' + ex.id + '" aria-label="Remover exercício ' + esc(ex.nome) + '">' + icone('trash') + '</button>' +
+        '</li>';
+      }).join('');
+    }
+
+    function renderHistorico() {
+      var lista = document.getElementById('historico-lista');
+      if (estado.historico.length === 0) {
+        lista.innerHTML = '<li class="vazio">Você ainda não registrou nenhum treino.</li>';
+        return;
+      }
+      // Mais recentes primeiro, mostrando só os 6 últimos
+      var recentes = estado.historico.slice().sort(function (a, b) {
+        return a.data === b.data ? 0 : (a.data < b.data ? 1 : -1);
+      }).slice(0, 6);
+
+      lista.innerHTML = recentes.map(function (h) {
+        var data = new Date(h.data + 'T00:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }).replace('.', '');
+        return '<li class="hist-item">' +
+          '<time class="hist-data" datetime="' + esc(h.data) + '">' + data + '<span class="hist-ano">' + esc(h.data.slice(0, 4)) + '</span></time>' +
+          '<div class="item-info"><div class="item-nome">' + esc(h.treino) + '</div>' +
+          '<div class="item-det">' + h.feitos + '/' + h.total + ' exercícios · ' + (h.feitos < h.total ? 'Parcial' : 'Completo') + '</div></div>' +
+          '<div class="hist-volume">' + formatar(h.volume) + ' kg</div>' +
+        '</li>';
+      }).join('');
+    }
+
+    function focoDisponivel(el) {
+      return el && el.isConnected && !el.disabled && !el.closest('[hidden]') && el.getClientRects().length > 0;
+    }
+
+    function guardarFoco() {
+      var el = document.activeElement;
+      if (!el || el === document.body) { return null; }
+      var tela = el.closest('.tela');
+      var linha = el.closest('li');
+      var seguinte = linha && linha.nextElementSibling;
+      var anterior = linha && linha.previousElementSibling;
+      seguinte = seguinte && seguinte.querySelector('[data-id]');
+      anterior = anterior && anterior.querySelector('[data-id]');
+      return { elemento: el, tela: tela, acao: el.dataset.acao, id: el.dataset.id, tema: el.dataset.tema,
+        seguinte: seguinte && seguinte.dataset.id, anterior: anterior && anterior.dataset.id };
+    }
+
+    function controleDoFoco(foco, id) {
+      var area = foco.tela || document;
+      var controles = area.querySelectorAll('[data-acao]');
+      for (var i = 0; i < controles.length; i++) {
+        var el = controles[i];
+        if (el.dataset.acao === foco.acao && el.dataset.id === id && el.dataset.tema === foco.tema && focoDisponivel(el)) { return el; }
+      }
+      return null;
+    }
+
+    function restaurarFoco(foco) {
+      if (!foco || focoDisponivel(foco.elemento)) { return; }
+      // O redesenho troca os botões; reencontra a mesma ação pelo exercício.
+      var destino = foco.acao && controleDoFoco(foco, foco.id);
+      if (!destino && foco.acao === 'remover') {
+        destino = (foco.seguinte && controleDoFoco(foco, foco.seguinte)) ||
+          (foco.anterior && controleDoFoco(foco, foco.anterior)) || document.getElementById('f-nome');
+      }
+      if (bloquearAlteracoes) { destino = document.querySelector('[data-acao="recarregar-dados"]'); }
+      if (!focoDisponivel(destino)) {
+        destino = document.querySelector('.tela.ativa').id === 'tela-inicio' ? document.getElementById('card-treino') : document.getElementById('f-nome');
+      }
+      if (!focoDisponivel(destino)) { return; }
+      destino.focus({ preventScroll: true });
+      var tela = destino.closest('.tela');
+      if (tela) {
+        var alvo = destino.getBoundingClientRect();
+        var area = tela.getBoundingClientRect();
+        if (alvo.top < area.top || alvo.bottom > area.bottom) { destino.scrollIntoView({ block: 'nearest' }); }
+      }
+    }
+
+    // Redesenha tudo (chamamos depois de qualquer mudança)
+    function render() {
+      var foco = guardarFoco();
+      renderCabecalho();
+      renderResumo();
+      renderTreinoHoje();
+      renderSemana();
+      renderListaTreinos();
+      renderHistorico();
+      if (document.getElementById('ajuda-treino').open) { atualizarAjuda(); }
+      document.querySelectorAll('[data-acao="marcar"], [data-acao="mais"], [data-acao="menos"], [data-acao="remover"], [data-acao="registrar"], [data-acao="cancelar-alteracoes"], #form-exercicio button').forEach(function (botao) {
+        botao.disabled = bloquearAlteracoes;
+      });
+      document.querySelector('[data-acao="resetar"]').disabled = !leituraConcluida;
+      restaurarFoco(foco);
+    }
+
+    /* ---------- Aviso rápido (toast) ---------- */
+
+    var tempoToast = null;
+    function toast(mensagem) {
+      var el = document.getElementById('toast');
+      el.textContent = mensagem;
+      el.classList.add('mostrar');
+      clearTimeout(tempoToast);
+      tempoToast = setTimeout(function () { el.classList.remove('mostrar'); }, 2200);
+    }
+
+    /* ---------- Trocar de aba ---------- */
+
+    // A posição de leitura vale só nesta abertura; navegar não grava o treino.
+    var rolagemAbas = { inicio: 0, treinos: 0 };
+
+    function mostrarAba(nome) {
+      if (nome !== 'inicio' && nome !== 'treinos') { return; }
+      var destino = document.getElementById('tela-' + nome);
+      var atual = document.querySelector('.tela.ativa');
+      if (atual !== destino) {
+        rolagemAbas[atual.id.replace('tela-', '')] = atual.scrollTop;
+      }
+      document.getElementById('tela-inicio').classList.toggle('ativa', nome === 'inicio');
+      document.getElementById('tela-treinos').classList.toggle('ativa', nome === 'treinos');
+
+      var abas = document.querySelectorAll('.tab[data-aba]');
+      abas.forEach(function (aba) {
+        aba.classList.toggle('ativa', aba.dataset.aba === nome);
+        if (aba.dataset.aba === nome) { aba.setAttribute('aria-current', 'page'); }
+        else { aba.removeAttribute('aria-current'); }
+      });
+      // As abas "em breve" nunca ficam marcadas
+      document.querySelectorAll('.tab:not([data-aba])').forEach(function (aba) {
+        aba.classList.remove('ativa');
+      });
+
+      if (atual !== destino) { destino.scrollTop = rolagemAbas[nome]; }
+      if (atual !== destino && atual.contains(document.activeElement)) {
+        document.querySelector('.tab.ativa').focus({ preventScroll: true });
+      }
+    }
+
+    function abrirTrecho(nome, id, posicao) {
+      mostrarAba(nome);
+      var destino = document.getElementById(id);
+      // O atalho tem destino explícito; a troca pela barra mantém a rolagem anterior.
+      destino.focus({ preventScroll: true });
+      destino.scrollIntoView({ block: posicao || 'start' });
+    }
+
+    /* ---------- Ações do usuário ---------- */
+
+    function atualizarAjuda() {
+      var contexto = document.getElementById('ajuda-contexto');
+      var ex = exercicioAjuda ? acharExercicio(exercicioAjuda) : null;
+      contexto.hidden = !exercicioAjuda;
+      contexto.textContent = ex ? ex.nome + ': ' + ex.series + ' séries de ' + ex.reps + ' repetições. Carga informada: ' +
+        (ex.carga === 0 ? 'peso corporal (0 kg).' : formatar(ex.carga) + ' kg.') : 'Este exercício não está mais na lista atual.';
+    }
+
+    function abrirAjuda(botao) {
+      origemAjuda = botao;
+      exercicioAjuda = Number(botao.dataset.id) || null;
+      atualizarAjuda();
+      var dialogo = document.getElementById('ajuda-treino');
+      dialogo.querySelector('details').open = false;
+      dialogo.showModal();
+      dialogo.scrollTop = 0;
+      if (botao.dataset.tema === 'volume') { document.getElementById('ajuda-volume').scrollIntoView({ block: 'start' }); }
+    }
+
+    function concluirAjuda() {
+      // A consulta não salva dados; devolve o foco ao ponto de origem.
+      if (origemAjuda && origemAjuda.isConnected) { origemAjuda.focus({ preventScroll: true }); }
+      else {
+        var tela = document.querySelector('.tela.ativa');
+        var botao = origemAjuda && controleDoFoco({ tela: tela, acao: 'ajuda', tema: origemAjuda.dataset.tema }, origemAjuda.dataset.id);
+        if (!botao) { botao = tela.querySelector('[data-acao="ajuda"]'); }
+        if (botao) { botao.focus({ preventScroll: true }); }
+      }
+      origemAjuda = null;
+      exercicioAjuda = null;
+    }
+
+    function acharExercicio(id) {
+      return estado.exercicios.filter(function (ex) { return ex.id === id; })[0];
+    }
+
+    function marcarExercicio(id) {
+      if (!podeAlterar()) { return; }
+      var ex = acharExercicio(id);
+      if (!ex) { return; }
+      ex.feito = !ex.feito;
+      salvar();
+      render();
+    }
+
+    function registrarTreino() {
+      if (!podeAlterar()) { return; }
+      var registro = registroDaData(hojeISO());
+      var legado = !!registro && !estado.referenciaRegistro;
+      if (registro && !legado && !temAlteracoes()) { toast('O treino de hoje já foi registrado ✓'); return; }
+      if (quantosFeitos() === 0) {
+        toast(registro ? (legado ? 'Marque ao menos um exercício para atualizar o registro anterior.' : 'Marque ao menos um exercício para atualizar ou cancele as alterações.') : 'Marque ao menos um exercício como feito');
+        return;
+      }
+      if (legado) {
+        var dia = estado.diaMarcacao;
+        if (!confirm('O registro anterior não tem os detalhes dos exercícios. Substituir o resumo de hoje pelas marcações atuais? O resumo anterior será substituído.')) { return; }
+        if (!podeAlterar() || estado.diaMarcacao !== dia) { return; }
+      }
+
+      var resumo = {
+        data: hojeISO(),
+        treino: estado.nomeTreino,
+        feitos: quantosFeitos(),
+        total: estado.exercicios.length,
+        volume: volumeFeito()
+      };
+      if (registro) {
+        estado.historico = estado.historico.map(function (h) { return h.data === resumo.data ? resumo : h; });
+      } else { estado.historico.push(resumo); }
+      estado.referenciaRegistro = { data: hojeISO(), nomeTreino: estado.nomeTreino, exercicios: copiar(estado.exercicios) };
+      if (!salvar()) { render(); return; }
+      render();
+      toast(registro ? 'Registro de hoje atualizado' : 'Treino registrado! Bom trabalho 💪');
+    }
+
+    function cancelarAlteracoes() {
+      if (!podeAlterar() || estadoDoTreino() !== 'pendente') { return; }
+      var dia = estado.diaMarcacao;
+      if (!confirm('Voltar ao último registro de hoje? As marcações, cargas e a lista de exercícios voltarão ao que estava registrado. Exercícios adicionados depois serão removidos e os removidos serão recuperados.')) { return; }
+      if (!podeAlterar() || estado.diaMarcacao !== dia) { return; }
+      estado.nomeTreino = estado.referenciaRegistro.nomeTreino;
+      estado.exercicios = copiar(estado.referenciaRegistro.exercicios);
+      // O contador não retrocede, evitando reutilizar IDs de exercícios removidos.
+      if (!salvar()) { render(); return; }
+      render();
+      toast('Alterações canceladas');
+    }
+
+    function mudarCarga(id, passo) {
+      if (!podeAlterar()) { return; }
+      var ex = acharExercicio(id);
+      if (!ex) { return; }
+      var carga = Math.max(0, Math.round((ex.carga + passo) * 10) / 10);
+      if (carga > 1000000) { toast('A carga não pode ultrapassar 1.000.000 kg'); return; }
+      ex.carga = carga;
+      salvar();
+      render();
+    }
+
+    function removerExercicio(id) {
+      if (!podeAlterar()) { return; }
+      var dia = estado.diaMarcacao;
+      var ex = acharExercicio(id);
+      if (!ex) { return; }
+      if (!confirm('Remover "' + ex.nome + '" do treino?')) { return; }
+      if (!podeAlterar() || estado.diaMarcacao !== dia) { return; }
+      estado.exercicios = estado.exercicios.filter(function (e) { return e.id !== id; });
+      var salvo = salvar();
+      render();
+      if (salvo) { toast('Exercício removido: ' + ex.nome); }
+    }
+
+    // Lê o texto inteiro, sem transformar vazio, letras ou partes de números em zero.
+    function numeroDoCampo(texto, minimo, maximo, decimal) {
+      var valor = texto.trim();
+      var formato = decimal ? /^[0-9]+([.,][0-9])?$/ : /^[0-9]+$/;
+      if (!formato.test(valor)) { return null; }
+      var numero = Number(valor.replace(',', '.'));
+      return numeroValido(numero, minimo, maximo, !decimal) ? numero : null;
+    }
+
+    function validarFormulario(campos) {
+      var dados = {
+        nome: campos.nome.trim().replace(/\s+/g, ' '),
+        series: numeroDoCampo(campos.series, 1, 1000, false),
+        reps: numeroDoCampo(campos.reps, 1, 1000, false),
+        carga: numeroDoCampo(campos.carga, 0, 1000000, true)
+      };
+      var erros = {};
+      if (!dados.nome) { erros.nome = 'Digite o nome do exercício'; }
+      else if (dados.nome.length > 40) { erros.nome = 'Use até 40 caracteres no nome.'; }
+      if (dados.series === null) { erros.series = 'Use um número inteiro de 1 a 1000.'; }
+      if (dados.reps === null) { erros.reps = 'Use um número inteiro de 1 a 1000.'; }
+      if (dados.carga === null) { erros.carga = 'Use de 0 a 1.000.000 kg, com até uma casa decimal. Ex.: 2,5.'; }
+      return { dados: dados, erros: erros };
+    }
+
+    function lerFormulario() {
+      var campos = {};
+      ['nome', 'series', 'reps', 'carga'].forEach(function (campo) {
+        campos[campo] = document.getElementById('f-' + campo).value;
+      });
+      return campos;
+    }
+
+    function mostrarErroCampo(campo, mensagem) {
+      var entrada = document.getElementById('f-' + campo);
+      var aviso = document.getElementById('erro-' + campo);
+      aviso.textContent = mensagem || '';
+      aviso.hidden = !mensagem;
+      if (mensagem) { entrada.setAttribute('aria-invalid', 'true'); }
+      else { entrada.removeAttribute('aria-invalid'); }
+    }
+
+    function erroFormulario(mensagem) {
+      var aviso = document.getElementById('erro-formulario');
+      aviso.textContent = mensagem;
+      aviso.hidden = !mensagem;
+    }
+
+    function adicionarExercicio(evento) {
+      evento.preventDefault();
+      erroFormulario('');
+      if (!podeAlterar()) { return; }
+      var resultado = validarFormulario(lerFormulario());
+      var primeiro = '';
+      ['nome', 'series', 'reps', 'carga'].forEach(function (campo) {
+        mostrarErroCampo(campo, resultado.erros[campo]);
+        if (!primeiro && resultado.erros[campo]) { primeiro = campo; }
+      });
+      if (primeiro) {
+        document.getElementById('f-' + primeiro).focus();
+        toast(resultado.erros[primeiro]);
+        return;
+      }
+      if (estado.exercicios.length >= 1000 || estado.proximoId >= 2147483647) {
+        erroFormulario('Não foi possível adicionar: o limite de exercícios deste treino foi atingido.');
+        return;
+      }
+      var dados = resultado.dados;
+      estado.exercicios.push({ id: estado.proximoId, nome: dados.nome, series: dados.series, reps: dados.reps, carga: dados.carga, feito: false });
+      estado.proximoId++;
+      if (!salvar()) { render(); erroFormulario('O exercício não foi salvo. Seus campos foram mantidos. Confira o aviso de armazenamento.'); return; }
+      render();
+
+      document.getElementById('f-nome').value = '';
+      toast('Exercício adicionado');
+    }
+
+    function resetarDados() {
+      if (!leituraConcluida) { toast('Carregue os dados antes de restaurar os exemplos'); return; }
+      if (!bloquearAlteracoes && !conferirDia()) { return; }
+      var dia = hojeISO();
+      var mensagem = CENARIO_AVALIACAO ? 'Restaurar o cenário de avaliação? Os registros deste cenário serão apagados. Continue somente depois de preservar as observações e evidências da sessão fora do aplicativo.' : 'Restaurar os dados de exemplo? Seus registros atuais serão apagados.';
+      if (!confirm(mensagem)) { return; }
+      if (hojeISO() !== dia) { conferirDia(); return; }
+      estado = estadoInicial();
+      if (!salvar(true)) { render(); return; }
+      render();
+      avisarDia('');
+      toast('Dados de exemplo restaurados');
+    }
+
+    /* ---------- Um único "ouvinte" para todos os botões ---------- */
+
+    document.addEventListener('click', function (evento) {
+      var botao = evento.target.closest('[data-acao]');
+      if (!botao) { return; }
+
+      var acao = botao.dataset.acao;
+      var id = Number(botao.dataset.id);
+
+      if (acao === 'aba')            { mostrarAba(botao.dataset.aba); }
+      else if (acao === 'ajuda')     { abrirAjuda(botao); }
+      else if (acao === 'fechar-ajuda') { document.getElementById('ajuda-treino').close(); }
+      else if (acao === 'recarregar-dados') { iniciarDados(); }
+      else if (acao === 'embreve')   { toast('Em breve: fora do escopo desta versão'); }
+      else if (acao === 'notificacoes') { toast('Nenhuma notificação nova'); }
+      else if (acao === 'marcar')    { marcarExercicio(id); }
+      else if (acao === 'registrar') { registrarTreino(); }
+      else if (acao === 'cancelar-alteracoes') { cancelarAlteracoes(); }
+      else if (acao === 'conferir-dia' || acao === 'revisar-registro') {
+        conferirDia();
+        mostrarAba('inicio');
+        if (acao === 'conferir-dia') { avisarDia(''); }
+        document.getElementById('card-treino').scrollIntoView({ block: 'start' });
+        document.getElementById('card-treino').focus({ preventScroll: true });
+      }
+      else if (acao === 'mais')      { mudarCarga(id, 2.5); }
+      else if (acao === 'menos')     { mudarCarga(id, -2.5); }
+      else if (acao === 'remover')   { removerExercicio(id); }
+      else if (acao === 'resetar')   { resetarDados(); }
+      else if (acao === 'novo-exercicio') {
+        abrirTrecho('treinos', 'f-nome', 'center');
+      }
+      else if (acao === 'historico') {
+        abrirTrecho('treinos', 'titulo-historico');
+      }
+    });
+
+    document.getElementById('form-exercicio').addEventListener('submit', adicionarExercicio);
+    document.getElementById('ajuda-treino').addEventListener('close', concluirAjuda);
+    document.getElementById('ajuda-treino').addEventListener('keydown', function (evento) {
+      if (evento.key !== 'Tab') { return; }
+      // Mantém o teclado na consulta, inclusive ao chegar ao último controle.
+      var controles = Array.prototype.filter.call(this.querySelectorAll('button, summary, a[href]'), function (el) {
+        var detalhes = el.closest('details');
+        return !el.disabled && (!detalhes || detalhes.open || el.tagName === 'SUMMARY') && el.getClientRects().length > 0;
+      });
+      var primeiro = controles[0];
+      var ultimo = controles[controles.length - 1];
+      if (evento.shiftKey && (document.activeElement === primeiro || document.activeElement === this)) {
+        evento.preventDefault(); ultimo.focus();
+      } else if (!evento.shiftKey && (document.activeElement === ultimo || document.activeElement === this)) {
+        evento.preventDefault(); primeiro.focus();
+      }
+    });
+    document.getElementById('form-exercicio').addEventListener('input', function (evento) {
+      var campo = evento.target.id.replace('f-', '');
+      if (['nome', 'series', 'reps', 'carga'].indexOf(campo) === -1) { return; }
+      if (evento.target.getAttribute('aria-invalid') === 'true') {
+        mostrarErroCampo(campo, validarFormulario(lerFormulario()).erros[campo]);
+      }
+    });
+    window.addEventListener('focus', conferirDia);
+    window.addEventListener('pageshow', conferirDia);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) { conferirDia(); }
+    });
+
+    /* ---------- Começo do app ---------- */
+
+    iniciarDados();
+  </script>
+</body>
+</html>
